@@ -65,42 +65,64 @@ public class FireHouseGame extends GameDescription {
         push.setAlias(new String[]{"spingi", "attiva"});
         getCommands().add(push);
         //Rooms
-        Room hall = new Room(0, "Corridoio", "Sei appena tornato a casa e non sai cosa fare.\nTi ricordi che non hai ancora aperto quel fantastico regalo di tua zia Lina.\n"
+        Room salotto = new Room(0, "salotto", "Tuo zio Ernesto è morto da poco e tu sei entrato in casa sua per trovare e riscuotere la sua ricca eredità,gira per la casa e vedi di trovarla..."
                 + " Sarà il caso di cercarlo e di giocarci!");
-        hall.setLook("Sei nel corridoio, a nord vedi il bagno, a sud il soggiorno e ad ovest la tua cameretta, forse il gioco sarà lì?");
-        Room livingRoom = new Room(1, "Soggiorno", "Ti trovi nel soggiorno.\nCi sono quei mobili marrone scuro che hai sempre odiato e delle orribili sedie.");
-        livingRoom.setLook("Non c'è nulla di interessante qui.");
-        Room kitchen = new Room(2, "Cucina", "Ti trovi nella solita cucina.\nMobili bianchi, maniglie azzurre, quello strano lampadario che adoravi tanto quando eri piccolo.\n"
-                + "C'è un tavolo con un bel portafrutta e una finestra.");
-        kitchen.setLook("La solita cucina, ma noti una chiave vicino al portafrutta.");
-        Room bathroom = new Room(3, "Bagno", "Sei nel bagno.\nQuanto tempo passato qui dentro...meglio non pensarci...");
-        bathroom.setLook("Vedo delle batterie sul mobile alla destra del lavandino.");
-        Room yourRoom = new Room(4, "La tua cameratta", "Finalmente la tua cameretta!\nQuesto luogo ti è così famigliare...ma non ricordi dove hai messo il nuovo regalo di zia Lina.");
-        yourRoom.setLook("C'è un armadio bianco, di solito ci conservi i tuoi giochi.");
+        salotto.setLook("Sei nel salotto, vedi un divano e una poltrona ,ma non è il momento per mettersi comodi!");
+        Room cucina = new Room(1, "cucina", "Ti trovi in cucina.\n");
+        cucina.setLook("La cucina stranamente è pulita c'è un foglietto sul forno microonde e vedi anche una porta del quale non ricordi a che stanza porta. ");
+        Room bagno = new Room(2, "bagno", ".\nPiù che un bagno sembra una reggia , tuo zio si era comprato anche una yacuzzi.\n");
+        bagno.setLook("Non trovi nulla di interressante nel bagno.");
+        Room cameraDaLetto = new Room(3, "Camera Da letto", "Sei nella camera da letto.\nQuante sborrate si sarà fatto tuo zio qui dentro!!");
+        cameraDaLetto.setLook("C'è un comodino con il cassetto leggermente aperto.");
+        Room corridoio = new Room(4, "Corridoio", "é un corridoio molto lungo \nCosì lungo da collegare solamente due stanze al salotto.");
+        corridoio.setLook("Il corridoio è poco illuminato ma vedi abbastanza da capire che non c'è nulla.");
+        Room stanzetta = new Room(4, "Stanzetta", "Questa è la stanza per gli ospiti\nTuo zio non aveva molti amici ..infatti la stanza è come nuova.");
+        corridoio.setLook("C'è un armadio bianco, sarerbbe opportuno darli un occhiata.");
+        Room studio = new Room(4, "studio", "Lo studio dello zio\nIn questo studio lo zio ha scritto alcuni dei suoi più grandi articoli.");
+        corridoio.setLook("C'è una scrivania piena di penne e di fogli ma noti anche un quadro con la sua faccia ,lo zio non te lo ricordavi così egocentrico.");
+        Room cabinaArmadio = new Room(4, "Cabina Armadio", "Una comunissima cabina armadio....piena di vestiti tutti dello stesso colore ...il grigio.");
+        corridoio.setLook("Tra questi vedi la famosa giacca che metteva spesso tuo zio ,dalla tasca spunta un fogliettino.");
+        Room sgabuzzino = new Room(4, "sgabuzzino", "Lo sgabuzzino!\nQuesta stanza non te la ricordi...ma pensandoci su non l'hai mai vista...è molto sporca e  c'è di tutto dal cibo in scatola ai giocattoli di quando lo zio era un bambino,ogni cosa che non sapeva dove metterla la infilava quì.");
+        corridoio.setLook("Vedi che all'interno di un boccaccio trasparente c'è un fogliettino!.");
+        
         //map
-        kitchen.setEast(livingRoom);
-        livingRoom.setNorth(hall);
-        livingRoom.setWest(kitchen);
-        hall.setSouth(livingRoom);
-        hall.setWest(yourRoom);
-        hall.setNorth(bathroom);
-        bathroom.setSouth(hall);
-        yourRoom.setEast(hall);
-        getRooms().add(kitchen);
-        getRooms().add(livingRoom);
-        getRooms().add(hall);
-        getRooms().add(bathroom);
-        getRooms().add(yourRoom);
+        
+        salotto.setSouth(bagno);
+        salotto.setEast(cucina);
+        salotto.setWest(cameraDaLetto);
+        salotto.setNorth(corridoio);
+        bagno.setNorth(salotto);
+        cameraDaLetto.setSouth(cabinaArmadio);
+        cameraDaLetto.setEast(salotto);
+        corridoio.setEast(studio);
+        corridoio.setWest(stanzetta);
+        corridoio.setSouth(salotto);
+        cucina.setSouth(sgabuzzino);
+        cucina.setWest(salotto);
+        stanzetta.setEast(corridoio);
+        studio.setWest(corridoio);
+        cabinaArmadio.setNorth(cameraDaLetto);
+        sgabuzzino.setNorth(cucina);
+        getRooms().add(salotto);
+        getRooms().add(cameraDaLetto);
+        getRooms().add(corridoio);
+        getRooms().add(cucina);
+        getRooms().add(stanzetta);
+        getRooms().add(studio);
+        getRooms().add(cabinaArmadio);
+        getRooms().add(sgabuzzino);
+        getRooms().add(bagno);
+       
         //obejcts
         AdvObject battery = new AdvObject(1, "batteria", "Un pacco di batterie, chissà se sono cariche.");
         battery.setAlias(new String[]{"batterie", "pile", "pila"});
-        bathroom.getObjects().add(battery);
+        bagno.getObjects().add(battery);
         AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
         wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
         wardrobe.setOpenable(true);
         wardrobe.setPickupable(false);
         wardrobe.setOpen(false);
-        yourRoom.getObjects().add(wardrobe);
+        stanzetta.getObjects().add(wardrobe);
         AdvObject toy = new AdvObject(3, "giocattolo", "Il gioco che ti ha regalato zia Lina.");
         toy.setAlias(new String[]{"gioco", "robot"});
         toy.setPushable(true);
@@ -110,9 +132,9 @@ public class FireHouseGame extends GameDescription {
         toy.setAlias(new String[]{"key"});
         toy.setPushable(false);
         toy.setPush(false);
-        kitchen.getObjects().add(kkey);
+        cucina.getObjects().add(kkey);
         //set starting room
-        setCurrentRoom(hall);
+        setCurrentRoom(salotto);
     }
 
     @Override

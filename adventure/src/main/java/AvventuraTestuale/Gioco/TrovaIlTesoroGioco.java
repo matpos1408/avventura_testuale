@@ -159,6 +159,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
         stanzetta.getObjects().add(armadio);
         chiave.setPush(false);
         chiave.setPushable(false);
+        chiave.setPickupable(true);
         armadio.add(chiave);
         
 
@@ -202,14 +203,28 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     move = true;
                 } else {
                     noroom = true;
-                }
+                } 
+                //comando sud
             } else if (p.getCommand().getType() == TipoComandi.SOUTH) {
                 if (getCurrentRoom().getSouth() != null) {
-                    setCurrentRoom(getCurrentRoom().getSouth());
-                    move = true;
+                    Oggetti chiave = new Oggetti(7, "chiave", "Una semplice chiave come molte altre.");
+                    if(getCurrentRoom()==getRooms().get(3) && getInventory().contains(chiave)){
+                        setCurrentRoom(getCurrentRoom().getSouth());
+                        //se sei in cucina e hai la chiave
+                        move = true;
+                    }
+                    else if(getCurrentRoom()==getRooms().get(3) && !getInventory().contains(p.getObject())){ 
+                        // se sei in cucina e non hai la chiave 
+                        System.out.println("non hai la chiave");
+                    }
+                    else if(getCurrentRoom()!=getRooms().get(3)){
+                        setCurrentRoom(getCurrentRoom().getSouth());
+                        move = true;
+                    }
                 } else {
                     noroom = true;
                 }
+                // fine comando sud
             } else if (p.getCommand().getType() == TipoComandi.EAST) {
                 if (getCurrentRoom().getEast() != null) {
                     setCurrentRoom(getCurrentRoom().getEast());

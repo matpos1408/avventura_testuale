@@ -65,25 +65,24 @@ public class TrovaIlTesoroGioco extends GameDescription {
         push.setAlias(new String[]{"spingi", "attiva"});
         getCommands().add(push);
         //Rooms
-        Stanze salotto = new Stanze(0, "salotto", "Tuo zio Ernesto è morto da poco e tu sei entrato in casa sua per trovare e riscuotere la sua ricca eredità,gira per la casa e vedi di trovarla..."
-                + " Sarà il caso di cercarlo e di giocarci!");
+        Stanze salotto = new Stanze(0, "salotto", "Tuo zio Ernesto è morto da poco e tu sei entrato in casa sua per trovare e riscuotere la sua ricca eredità,gira per la casa e vedi di trovarla...");
         salotto.setLook("Sei nel salotto, vedi un divano e una poltrona ,ma non è il momento per mettersi comodi!");
         Stanze cucina = new Stanze(1, "cucina", "Ti trovi in cucina.\n");
         cucina.setLook("La cucina stranamente è pulita c'è un foglietto sul forno microonde e vedi anche una porta del quale non ricordi a che stanza porta. ");
-        Stanze bagno = new Stanze(2, "bagno", ".\nPiù che un bagno sembra una reggia , tuo zio si era comprato anche una yacuzzi.\n");
+        Stanze bagno = new Stanze(2, "bagno", "\nPiù che un bagno sembra una reggia , tuo zio si era comprato anche una yacuzzi.\n");
         bagno.setLook("Non trovi nulla di interressante nel bagno.");
         Stanze cameraDaLetto = new Stanze(3, "Camera Da letto", "Sei nella camera da letto.\nQuante sborrate si sarà fatto tuo zio qui dentro!!");
         cameraDaLetto.setLook("C'è un comodino con il cassetto leggermente aperto.");
         Stanze corridoio = new Stanze(4, "Corridoio", "é un corridoio molto lungo \nCosì lungo da collegare solamente due stanze al salotto.");
         corridoio.setLook("Il corridoio è poco illuminato ma vedi abbastanza da capire che non c'è nulla.");
         Stanze stanzetta = new Stanze(4, "Stanzetta", "Questa è la stanza per gli ospiti\nTuo zio non aveva molti amici ..infatti la stanza è come nuova.");
-        corridoio.setLook("C'è un armadio bianco, sarerbbe opportuno darli un occhiata.");
+        stanzetta.setLook("C'è un armadio bianco, sarerbbe opportuno darli un occhiata.");
         Stanze studio = new Stanze(4, "studio", "Lo studio dello zio\nIn questo studio lo zio ha scritto alcuni dei suoi più grandi articoli.");
-        corridoio.setLook("C'è una scrivania piena di penne e di fogli ma noti anche un quadro con la sua faccia ,lo zio non te lo ricordavi così egocentrico.");
+        studio.setLook("C'è una scrivania piena di penne e di fogli ma noti anche un quadro con la sua faccia ,lo zio non te lo ricordavi così egocentrico.");
         Stanze cabinaArmadio = new Stanze(4, "Cabina Armadio", "Una comunissima cabina armadio....piena di vestiti tutti dello stesso colore ...il grigio.");
-        corridoio.setLook("Tra questi vedi la famosa giacca che metteva spesso tuo zio ,dalla tasca spunta un fogliettino.");
+        cabinaArmadio.setLook("Tra questi vedi la famosa giacca che metteva spesso tuo zio ,dalla tasca spunta un fogliettino.");
         Stanze sgabuzzino = new Stanze(4, "sgabuzzino", "Lo sgabuzzino!\nQuesta stanza non te la ricordi...ma pensandoci su non l'hai mai vista...è molto sporca e  c'è di tutto dal cibo in scatola ai giocattoli di quando lo zio era un bambino,ogni cosa che non sapeva dove metterla la infilava quì.");
-        corridoio.setLook("Vedi che all'interno di un boccaccio trasparente c'è un fogliettino!.");
+        sgabuzzino.setLook("Vedi che all'interno di un boccaccio trasparente c'è un fogliettino!.");
         
         //map
         
@@ -113,7 +112,59 @@ public class TrovaIlTesoroGioco extends GameDescription {
         getRooms().add(sgabuzzino);
         getRooms().add(bagno);
        
-        //obejcts
+        //creazione fogliettini
+        Oggetti fogliettino2 = new Oggetti(2,"Fogliettino n.2","Il fogliettino n.2!! ,Sul fogliettino ci sono le lettere 4 e 7");
+        Oggetti fogliettino1 = new Oggetti(1,"Fogliettino n.1","Sul fogliettino ci sono le lettere 3 e 1");
+        Oggetti fogliettino3 = new Oggetti(3,"Fogliettino n.3","Sul fogliettino ci sono le lettere 9 e 5");
+        Oggetti fogliettino4 = new Oggetti(4,"Fogliettino n.4","Sul fogliettino ci sono le lettere 6 e 6");
+        fogliettino1.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
+        fogliettino2.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
+        fogliettino3.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
+        fogliettino4.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
+        cameraDaLetto.getObjects().add(fogliettino2);
+        cucina.getObjects().add(fogliettino4);
+        cabinaArmadio.getObjects().add(fogliettino1);
+        sgabuzzino.getObjects().add(fogliettino3);
+        
+        //creazione del cassetto col fogliettino
+        ContenitoreOggetti comodino = new ContenitoreOggetti(5, "comodino", "Un comodino con il cassetto semi aperto.");
+        comodino.setOpenable(true);
+        comodino.setAlias(new String[]{"comò", "cassettiera","credenza","cassetto"});
+        comodino.setOpenable(true);
+        comodino.setPickupable(false);
+        comodino.setOpen(false);
+        cameraDaLetto.getObjects().add(comodino);
+        fogliettino2.setPushable(false);
+        fogliettino2.setPush(false);
+        comodino.add(fogliettino2);
+
+        //creazione barattolo nello sgabuzzino   
+        ContenitoreOggetti barattolo = new ContenitoreOggetti(6, "barattolo", "Un barattolo con all'interno un fogliettino.");
+        barattolo.setOpenable(true);
+        barattolo.setAlias(new String[]{"vasetto","bicchiere"});
+        barattolo.setPickupable(false);
+        barattolo.setOpen(false);
+        sgabuzzino.getObjects().add(barattolo);
+        fogliettino3.setPushable(false);
+        fogliettino3.setPush(false);
+        barattolo.add(fogliettino3);
+
+
+        ContenitoreOggetti armadio = new ContenitoreOggetti(7, "armadio", "Un armadio ");
+        Oggetti chiave = new Oggetti(7, "chiave", "Una semplice chiave come molte altre.");
+        armadio.setAlias(new String[]{"key"});
+        armadio.setOpenable(true);
+        armadio.setPickupable(false);
+        armadio.setOpen(false);
+        stanzetta.getObjects().add(armadio);
+        chiave.setPush(false);
+        chiave.setPushable(false);
+        armadio.add(chiave);
+        
+
+
+
+        //oggetti da eliminare
         Oggetti battery = new Oggetti(1, "batteria", "Un pacco di batterie, chissà se sono cariche.");
         battery.setAlias(new String[]{"batterie", "pile", "pila"});
         bagno.getObjects().add(battery);

@@ -64,6 +64,9 @@ public class TrovaIlTesoroGioco extends GameDescription {
         Comandi push = new Comandi(TipoComandi.PUSH, "premi");
         push.setAlias(new String[]{"spingi", "attiva"});
         getCommands().add(push);
+        Comandi move = new Comandi(TipoComandi.MOVE, "sposta");
+        move.setAlias(new String[]{"leva", "rimuovi"});
+        getCommands().add(move);
         //Rooms
         Stanze salotto = new Stanze(0, "salotto", "Tuo zio Ernesto è morto da poco e tu sei entrato in casa sua per trovare e riscuotere la sua ricca eredità,gira per la casa e vedi di trovarla...");
         salotto.setLook("Sei nel salotto, vedi un divano e una poltrona ,ma non è il momento per mettersi comodi!");
@@ -161,8 +164,18 @@ public class TrovaIlTesoroGioco extends GameDescription {
         chiave.setPushable(false);
         chiave.setPickupable(true);
         armadio.add(chiave);
-        
 
+        //creazione quadro nello studio
+        Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
+        studio.getObjects().add(quadro);
+        quadro.setPush(false);
+        quadro.setPushable(false);
+
+        //creazione cassaforte
+        Oggetti cassaforte = new Oggetti(9, "cassaforte", "Sembra molto resistente, per aprirla ci vuole una combinazione.");
+        studio.getObjects().add(cassaforte);
+        cassaforte.setPush(false);
+        cassaforte.setPushable(false);
 
 
         //oggetti da eliminare
@@ -244,13 +257,34 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 for (Oggetti o : getInventory()) {
                     out.println(o.getName() + ": " + o.getDescription());
                 }
-            } else if (p.getCommand().getType() == TipoComandi.LOOK_AT) {
-                if (getCurrentRoom().getLook() != null) {
-                    out.println(getCurrentRoom().getLook());
-                } else {
-                    out.println("Non c'è niente di interessante qui.");
-                }
-            } else if (p.getCommand().getType() == TipoComandi.PICK_UP) {
+            } 
+            //COMANDO SPOSTA
+            else if (p.getCommand().getType() == TipoComandi.MOVE) {
+                    if (p.getObject() != null) {
+                        if (p.getObject().isPickupable()) {
+                            getCurrentRoom().getObjects().remove(p.getObject());
+                            System.out.println("il quadro è stato spostato!!!");
+                         }
+                    } 
+                }else if (p.getCommand().getType() == TipoComandi.LOOK_AT) {
+                    //sei nello studio e hai spostato il quadro
+                Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
+                    if (getCurrentRoom().getLook() != null) {
+                        if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
+                            System.out.println("Dietro al Quadro c'è una cassaforte!!!");
+                        }
+                    //sei nello studio e non hai spostato il quadro
+                     else if(getCurrentRoom()==getRooms().get(5) && getCurrentRoom().getObjects().contains(quadro)) {
+                        out.println(getCurrentRoom().getLook());
+                    //non sei nello studio
+                    }else if(getCurrentRoom()!=getRooms().get(5)){
+                        out.println(getCurrentRoom().getLook());
+                        }
+                    }
+                    else{
+                        System.out.println("non c'è niente di interessante qui");
+                    }
+                } else if (p.getCommand().getType() == TipoComandi.PICK_UP) {
                 if (p.getObject() != null) {
                     if (p.getObject().isPickupable()) {
                         getInventory().add(p.getObject());

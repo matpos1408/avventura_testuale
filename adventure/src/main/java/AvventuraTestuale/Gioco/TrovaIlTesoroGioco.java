@@ -155,7 +155,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
         ContenitoreOggetti armadio = new ContenitoreOggetti(7, "armadio", "Un armadio ");
         Oggetti chiave = new Oggetti(7, "chiave", "Una semplice chiave come molte altre.");
-        armadio.setAlias(new String[]{"key"});
+        armadio.setAlias(new String[]{"mobile"});
         armadio.setOpenable(true);
         armadio.setPickupable(false);
         armadio.setOpen(false);
@@ -167,43 +167,30 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
         //creazione quadro nello studio
         Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
+        quadro.setAlias(new String[]{"dipinto"});
         studio.getObjects().add(quadro);
         quadro.setPush(false);
         quadro.setPushable(false);
 
-        //creazione cassaforte
-        Oggetti cassaforte = new Oggetti(9, "cassaforte", "Sembra molto resistente, per aprirla ci vuole una combinazione.");
+       //creazione cassaforte
+        ContenitoreOggetti cassaforte = new ContenitoreOggetti(10, "cassaforte", "Una cassaforte ");
+        Oggetti tesoro = new Oggetti(11, "tesoro", "Un dildo di gomma bagnato.");
+        cassaforte.setAlias(new String[]{"cassa"});
+        cassaforte.setOpenable(true);
+        cassaforte.setPickupable(false);
+        cassaforte.setOpen(false);
         studio.getObjects().add(cassaforte);
-        cassaforte.setPush(false);
-        cassaforte.setPushable(false);
+        tesoro.setPush(false);
+        tesoro.setPushable(false);
+        tesoro.setPickupable(true);
+        cassaforte.add(tesoro);
 
-
-        //oggetti da eliminare
-        Oggetti battery = new Oggetti(1, "batteria", "Un pacco di batterie, chissà se sono cariche.");
-        battery.setAlias(new String[]{"batterie", "pile", "pila"});
-        bagno.getObjects().add(battery);
-        ContenitoreOggetti wardrobe = new ContenitoreOggetti(2, "armadio", "Un semplice armadio.");
-        wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
-        wardrobe.setOpenable(true);
-        wardrobe.setPickupable(false);
-        wardrobe.setOpen(false);
-        stanzetta.getObjects().add(wardrobe);
-        Oggetti toy = new Oggetti(3, "giocattolo", "Il gioco che ti ha regalato zia Lina.");
-        toy.setAlias(new String[]{"gioco", "robot"});
-        toy.setPushable(true);
-        toy.setPush(false);
-        wardrobe.add(toy);
-        Oggetti kkey = new Oggetti(4, "chiave", "Usa semplice chiave come tante altre.");
-        toy.setAlias(new String[]{"key"});
-        toy.setPushable(false);
-        toy.setPush(false);
-        cucina.getObjects().add(kkey);
-        //set starting room
-        setCurrentRoom(salotto);
+        
     }
 
     @Override
     public void nextMove(ParserOutput p, PrintStream out) {
+        Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
         if (p.getCommand() == null) {
             out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
         } else {
@@ -268,7 +255,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     } 
                 }else if (p.getCommand().getType() == TipoComandi.LOOK_AT) {
                     //sei nello studio e hai spostato il quadro
-                Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
+                
                     if (getCurrentRoom().getLook() != null) {
                         if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
                             System.out.println("Dietro al Quadro c'è una cassaforte!!!");
@@ -307,20 +294,44 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     if (p.getObject() != null) {
                         if (p.getObject().isOpenable() && p.getObject().isOpen() == false) {
                             if (p.getObject() instanceof ContenitoreOggetti) {
-                                out.println("Hai aperto: " + p.getObject().getName());
-                                ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
-                                if (!c.getList().isEmpty()) {
-                                    out.print(c.getName() + " contiene:");
-                                    Iterator<Oggetti> it = c.getList().iterator();
-                                    while (it.hasNext()) {
-                                        Oggetti next = it.next();
-                                        getCurrentRoom().getObjects().add(next);
-                                        out.print(" " + next.getName());
-                                        it.remove();
+                                //si trova nello studio con quadro spostato
+                                if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
+                                    out.println("Hai aperto: " + p.getObject().getName());
+                                    ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
+                                    
+                                    if (!c.getList().isEmpty()) {
+                                        out.print(c.getName() + " contiene:");
+                                        Iterator<Oggetti> it = c.getList().iterator();
+                                        while (it.hasNext()) {
+                                            Oggetti next = it.next();
+                                            getCurrentRoom().getObjects().add(next);
+                                            out.print(" " + next.getName());
+                                            it.remove();
+                                        }
+                                        out.println();
                                     }
-                                    out.println();
+                                    p.getObject().setOpen(true);
+                                }else if(getCurrentRoom()==getRooms().get(5) && getCurrentRoom().getObjects().contains(quadro)){
+                                    System.out.println("Non vedo nessuna cassaforte");
                                 }
-                                p.getObject().setOpen(true);
+                                    //non si trova nello studio
+                                    else if(getCurrentRoom()!=getRooms().get(5)){
+                                    out.println("Hai aperto: " + p.getObject().getName());
+                                    ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
+                                    if (!c.getList().isEmpty()) {
+                                        out.print(c.getName() + " contiene:");
+                                        Iterator<Oggetti> it = c.getList().iterator();
+                                        while (it.hasNext()) {
+                                            Oggetti next = it.next();
+                                            getCurrentRoom().getObjects().add(next);
+                                            out.print(" " + next.getName());
+                                            it.remove();
+                                        }
+                                        out.println();
+                                    }
+                                    p.getObject().setOpen(true);
+                                }
+                                //p.getObject().setOpen(true);
                             } else {
                                 out.println("Hai aperto: " + p.getObject().getName());
                                 p.getObject().setOpen(true);

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package AvventuraTestuale.Parser;
 
 import AvventuraTestuale.Utils;
@@ -13,7 +9,7 @@ import java.util.Set;
 
 /**
  *
- * @author pierpaolo
+ * @author vito e mattia
  */
 public class Parser {
 
@@ -41,10 +37,7 @@ public class Parser {
         return -1;
     }
 
-    /* ATTENZIONE: il parser è implementato in modo abbastanza independete dalla lingua, ma riconosce solo 
-    * frasi semplici del tipo <azione> <oggetto> <oggetto>. Eventuali articoli o preposizioni vengono semplicemente
-    * rimossi.
-     */
+    
     public ParserOutput parse(String command, List<Comandi> commands, List<Oggetti> objects, List<Oggetti> inventory) {
         List<String> tokens = Utils.parseString(command, stopwords);
         if (!tokens.isEmpty()) {

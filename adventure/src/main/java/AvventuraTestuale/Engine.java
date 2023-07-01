@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package AvventuraTestuale;
 
 import AvventuraTestuale.Gioco.TrovaIlTesoroGioco;
@@ -15,11 +11,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * ATTENZIONE: l'Engine è molto spartano, in realtà demanda la logica alla
- * classe che implementa GameDescription e si occupa di gestire I/O sul
- * terminale.
  *
- * @author ####
+ *
+ * @author vito e mattia
  */
 public class Engine {
 

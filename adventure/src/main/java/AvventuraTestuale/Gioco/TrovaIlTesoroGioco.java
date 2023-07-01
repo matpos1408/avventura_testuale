@@ -14,20 +14,11 @@ import AvventuraTestuale.Tipo.TipoComandi;
 import AvventuraTestuale.Tipo.Stanze;
 import java.io.PrintStream;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
- * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
- * debba estendere la classe GameDescription. L'Engine è fatto in modo che possa
- * eseguire qualsiasi gioco che estende GameDescription, in questo modo si
- * possono creare più gioci utilizzando lo stesso Engine.
  *
- * Diverse migliorie possono essere applicate: - la descrizione del gioco
- * potrebbe essere caricate da file o da DBMS in modo da non modificare il
- * codice sorgente - l'utilizzo di file e DBMS non è semplice poiché all'interno
- * del file o del DBMS dovrebbe anche essere codificata la logica del gioco
- * (nextMove) oltre alla descrizione di stanze, oggetti, ecc...
- *
- * @author pierpaolo
+ * @author vito e mattia
  */
 public class TrovaIlTesoroGioco extends GameDescription {
 
@@ -67,27 +58,28 @@ public class TrovaIlTesoroGioco extends GameDescription {
         Comandi move = new Comandi(TipoComandi.MOVE, "sposta");
         move.setAlias(new String[]{"leva", "rimuovi"});
         getCommands().add(move);
-        //Rooms
+
+        //stanze
         Stanze salotto = new Stanze(0, "salotto", "Tuo zio Ernesto è morto da poco e tu sei entrato in casa sua per trovare e riscuotere la sua ricca eredità,gira per la casa e vedi di trovarla...");
         salotto.setLook("Sei nel salotto, vedi un divano e una poltrona ,ma non è il momento per mettersi comodi!");
         Stanze cucina = new Stanze(1, "cucina", "Ti trovi in cucina.\n");
-        cucina.setLook("La cucina stranamente è pulita c'è un foglietto sul forno microonde e vedi anche una porta del quale non ricordi a che stanza porta. ");
+        cucina.setLook("La cucina stranamente è pulita ,C'è un foglietto sul forno microonde "+"\nVedi anche una porta del quale non ricordi a che stanza porta. ");
         Stanze bagno = new Stanze(2, "bagno", "\nPiù che un bagno sembra una reggia , tuo zio si era comprato anche una yacuzzi.\n");
-        bagno.setLook("Non trovi nulla di interressante nel bagno.");
-        Stanze cameraDaLetto = new Stanze(3, "Camera Da letto", "Sei nella camera da letto.\nQuante sborrate si sarà fatto tuo zio qui dentro!!");
+        bagno.setLook("Non trovi nulla di interessante nel bagno.");
+        Stanze cameraDaLetto = new Stanze(3, "Camera Da letto", "Sei nella camera da letto.\nIn questa stanza tuo zio si faceva lunghi pisolini");
         cameraDaLetto.setLook("C'è un comodino con il cassetto leggermente aperto.");
         Stanze corridoio = new Stanze(4, "Corridoio", "é un corridoio molto lungo \nCosì lungo da collegare solamente due stanze al salotto.");
         corridoio.setLook("Il corridoio è poco illuminato ma vedi abbastanza da capire che non c'è nulla.");
         Stanze stanzetta = new Stanze(4, "Stanzetta", "Questa è la stanza per gli ospiti\nTuo zio non aveva molti amici ..infatti la stanza è come nuova.");
-        stanzetta.setLook("C'è un armadio bianco, sarerbbe opportuno darli un occhiata.");
+        stanzetta.setLook("C'è un armadio bianco, sarebbe opportuno darli un occhiata.");
         Stanze studio = new Stanze(4, "studio", "Lo studio dello zio\nIn questo studio lo zio ha scritto alcuni dei suoi più grandi articoli.");
         studio.setLook("C'è una scrivania piena di penne e di fogli ma noti anche un quadro con la sua faccia ,lo zio non te lo ricordavi così egocentrico.");
         Stanze cabinaArmadio = new Stanze(4, "Cabina Armadio", "Una comunissima cabina armadio....piena di vestiti tutti dello stesso colore ...il grigio.");
         cabinaArmadio.setLook("Tra questi vedi la famosa giacca che metteva spesso tuo zio ,dalla tasca spunta un fogliettino.");
-        Stanze sgabuzzino = new Stanze(4, "sgabuzzino", "Lo sgabuzzino!\nQuesta stanza non te la ricordi...ma pensandoci su non l'hai mai vista...è molto sporca e  c'è di tutto dal cibo in scatola ai giocattoli di quando lo zio era un bambino,ogni cosa che non sapeva dove metterla la infilava quì.");
-        sgabuzzino.setLook("Vedi che all'interno di un boccaccio trasparente c'è un fogliettino!.");
+        Stanze sgabuzzino = new Stanze(4, "sgabuzzino", "\nQuesta stanza non te la ricordi...probabilmente perchè non ci sei mai entrato."+"\nLa stanza è poco illuminata e piena di polvere");
+        sgabuzzino.setLook("Vedi sopra la credenza un barattolo trasparente con all'interno un fogliettino!.");
         
-        //map
+        //mappa
         
         salotto.setSouth(bagno);
         salotto.setEast(cucina);
@@ -114,12 +106,12 @@ public class TrovaIlTesoroGioco extends GameDescription {
         getRooms().add(cabinaArmadio);
         getRooms().add(sgabuzzino);
         getRooms().add(bagno);
-       
+        setCurrentRoom(salotto);
         //creazione fogliettini
         Oggetti fogliettino2 = new Oggetti(2,"Fogliettino n.2","Il fogliettino n.2!! ,Sul fogliettino ci sono le lettere 4 e 7");
-        Oggetti fogliettino1 = new Oggetti(1,"Fogliettino n.1","Sul fogliettino ci sono le lettere 3 e 1");
-        Oggetti fogliettino3 = new Oggetti(3,"Fogliettino n.3","Sul fogliettino ci sono le lettere 9 e 5");
-        Oggetti fogliettino4 = new Oggetti(4,"Fogliettino n.4","Sul fogliettino ci sono le lettere 6 e 6");
+        Oggetti fogliettino1 = new Oggetti(1,"Fogliettino n.1","Il fogliettino n.1!! ,Sul fogliettino ci sono le lettere 3 e 1");
+        Oggetti fogliettino3 = new Oggetti(3,"Fogliettino n.3","Il fogliettino n.3!! ,Sul fogliettino ci sono le lettere 9 e 5");
+        Oggetti fogliettino4 = new Oggetti(4,"Fogliettino n.4","Il fogliettino n.4!! ,Sul fogliettino ci sono le lettere 6 e 6");
         fogliettino1.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
         fogliettino2.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
         fogliettino3.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
@@ -153,8 +145,8 @@ public class TrovaIlTesoroGioco extends GameDescription {
         barattolo.add(fogliettino3);
 
 
-        ContenitoreOggetti armadio = new ContenitoreOggetti(7, "armadio", "Un armadio ");
-        Oggetti chiave = new Oggetti(7, "chiave", "Una semplice chiave come molte altre.");
+        ContenitoreOggetti armadio = new ContenitoreOggetti(9, "armadio", "Un armadio ");
+        Oggetti chiave = new Oggetti(7, "chiave", "Chiave. Questa chiave probabilmente serve ad aprire una porta della casa.");
         armadio.setAlias(new String[]{"mobile"});
         armadio.setOpenable(true);
         armadio.setPickupable(false);
@@ -174,7 +166,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
        //creazione cassaforte
         ContenitoreOggetti cassaforte = new ContenitoreOggetti(10, "cassaforte", "Una cassaforte ");
-        Oggetti tesoro = new Oggetti(11, "tesoro", "Un dildo di gomma bagnato.");
+        Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
         cassaforte.setAlias(new String[]{"cassa"});
         cassaforte.setOpenable(true);
         cassaforte.setPickupable(false);
@@ -209,13 +201,14 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 if (getCurrentRoom().getSouth() != null) {
                     Oggetti chiave = new Oggetti(7, "chiave", "Una semplice chiave come molte altre.");
                     if(getCurrentRoom()==getRooms().get(3) && getInventory().contains(chiave)){
+                        System.out.println("Utilizzi la chiave che hai trovato per aprire la porta!");
                         setCurrentRoom(getCurrentRoom().getSouth());
                         //se sei in cucina e hai la chiave
                         move = true;
                     }
                     else if(getCurrentRoom()==getRooms().get(3) && !getInventory().contains(p.getObject())){ 
                         // se sei in cucina e non hai la chiave 
-                        System.out.println("non hai la chiave");
+                        System.out.println("la porta sembrerebbe essere chiusa e tu non hai la chiave...");
                     }
                     else if(getCurrentRoom()!=getRooms().get(3)){
                         setCurrentRoom(getCurrentRoom().getSouth());
@@ -277,6 +270,10 @@ public class TrovaIlTesoroGioco extends GameDescription {
                         getInventory().add(p.getObject());
                         getCurrentRoom().getObjects().remove(p.getObject());
                         out.println("Hai raccolto: " + p.getObject().getDescription());
+                        Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
+                        if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
+                            new TrovaIlTesoroGioco().end(out);
+                        }
                     } else {
                         out.println("Non puoi raccogliere questo oggetto.");
                     }
@@ -284,10 +281,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     out.println("Non c'è niente da raccogliere qui.");
                 }
             } else if (p.getCommand().getType() == TipoComandi.OPEN) {
-                /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti
-                * vengongo inseriti nella stanza o nell'inventario a seconda di dove si trova l'oggetto contenitore.
-                * Potrebbe non esssere la soluzione ottimale.
-                 */
                 if (p.getObject() == null && p.getInvObject() == null) {
                     out.println("Non c'è niente da aprire qui.");
                 } else {
@@ -296,21 +289,31 @@ public class TrovaIlTesoroGioco extends GameDescription {
                             if (p.getObject() instanceof ContenitoreOggetti) {
                                 //si trova nello studio con quadro spostato
                                 if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
-                                    out.println("Hai aperto: " + p.getObject().getName());
-                                    ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
+                                    Scanner scanner = new Scanner(System.in);
+                                    System.out.print("Inserisci la combinazione ");
+                                    String numero = scanner.nextLine();
+                                    String combinazione="31479566";
+                                    if(numero.equals(combinazione)){
+                                        out.println("Hai aperto: " + p.getObject().getName());
+                                        ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
                                     
-                                    if (!c.getList().isEmpty()) {
-                                        out.print(c.getName() + " contiene:");
-                                        Iterator<Oggetti> it = c.getList().iterator();
-                                        while (it.hasNext()) {
-                                            Oggetti next = it.next();
-                                            getCurrentRoom().getObjects().add(next);
-                                            out.print(" " + next.getName());
-                                            it.remove();
+                                        if (!c.getList().isEmpty()) {
+                                            out.print(c.getName() + " contiene:");
+                                            Iterator<Oggetti> it = c.getList().iterator();
+                                            while (it.hasNext()) {
+                                                Oggetti next = it.next();
+                                                getCurrentRoom().getObjects().add(next);
+                                                out.print(" " + next.getName());
+                                                it.remove();
+                                            }
+                                            out.println();
+                                            
                                         }
-                                        out.println();
+                                        p.getObject().setOpen(true);
                                     }
-                                    p.getObject().setOpen(true);
+                                    else{
+                                            System.out.println("combinazione sbagliata");
+                                        } 
                                 }else if(getCurrentRoom()==getRooms().get(5) && getCurrentRoom().getObjects().contains(quadro)){
                                     System.out.println("Non vedo nessuna cassaforte");
                                 }
@@ -331,7 +334,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                     }
                                     p.getObject().setOpen(true);
                                 }
-                                //p.getObject().setOpen(true);
+                                
                             } else {
                                 out.println("Hai aperto: " + p.getObject().getName());
                                 p.getObject().setOpen(true);
@@ -390,9 +393,9 @@ public class TrovaIlTesoroGioco extends GameDescription {
             }
         }
     }
-
+    //DA MODIFICAREEE
     private void end(PrintStream out) {
-        out.println("Premi il pulsante del giocattolo e in seguito ad una forte esplosione la tua casa prende fuoco...\ntu e tuoi famigliari cercate invano di salvarvi e venite avvolti dalle fiamme...\nè stata una morte CALOROSA...addio!");
+        out.println("La pergamena scritta da tuo zio che dice....L'amore per famiglia è più importante di qualsiasi tesoro....Tuo zio te l'ha fatta un altra volta!!"+"\nFINE");
         System.exit(0);
     }
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package AvventuraTestuale.Tipo;
 
 import java.util.ArrayList;
@@ -10,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * @author pierpaolo
+ * @author vito e mattia
  */
 public class Inventario {
 

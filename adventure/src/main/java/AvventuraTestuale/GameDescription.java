@@ -5,7 +5,10 @@ import AvventuraTestuale.Parser.ParserOutput;
 import AvventuraTestuale.Tipo.Oggetti;
 import AvventuraTestuale.Tipo.Comandi;
 import AvventuraTestuale.Tipo.Stanze;
+
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,7 @@ public abstract class GameDescription {
     private final List<Comandi> commands = new ArrayList<>();
 
     private final List<Oggetti> inventory = new ArrayList<>();
+    
 
     private Stanze currentRoom;
 
@@ -45,6 +49,6 @@ public abstract class GameDescription {
 
     public abstract void init() throws Exception;
 
-    public abstract void nextMove(ParserOutput p, PrintStream out);
+    public abstract void nextMove(ParserOutput p, PrintStream out) throws IOException;
 
 }

@@ -5,8 +5,15 @@ import AvventuraTestuale.Gioco.TrovaIlTesoroGioco;
 import AvventuraTestuale.Parser.Parser;
 import AvventuraTestuale.Parser.ParserOutput;
 import AvventuraTestuale.Tipo.TipoComandi;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -21,8 +28,11 @@ public class Engine {
 
     private Parser parser;
 
-    public Engine(GameDescription game) {
+    private final Socket socket;
+
+    public Engine(GameDescription game, Socket socket) {
         this.game = game;
+        this.socket=socket;
         try {
             this.game.init();
         } catch (Exception ex) {
@@ -36,14 +46,16 @@ public class Engine {
         }
     }
 
-    public void execute() {
-        System.out.println("=========================================");
-        System.out.println("* Avventura Testuale v. 0.1 - 2022-2023 *");
-        System.out.println("=========================================");
-        System.out.println(game.getCurrentRoom().getName());
-        System.out.println();
-        System.out.println(game.getCurrentRoom().getDescription());
-        System.out.println();
+    public void execute() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter  out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+        out.println("=========================================");
+        out.println("* Avventura Testuale v. 0.1 - 2022-2023 *");
+        out.println("=========================================");
+        out.println(game.getCurrentRoom().getName());
+        out.println();
+        out.println(game.getCurrentRoom().getDescription());
+        out.println();
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
@@ -63,9 +75,9 @@ public class Engine {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Engine engine = new Engine(new TrovaIlTesoroGioco());
         engine.execute();
-    }
+    }*/
 
 }

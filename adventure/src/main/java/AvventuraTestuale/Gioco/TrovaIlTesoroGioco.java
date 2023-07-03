@@ -12,7 +12,15 @@ import AvventuraTestuale.Tipo.ContenitoreOggetti;
 import AvventuraTestuale.Tipo.Comandi;
 import AvventuraTestuale.Tipo.TipoComandi;
 import AvventuraTestuale.Tipo.Stanze;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -21,6 +29,12 @@ import java.util.Scanner;
  * @author vito e mattia
  */
 public class TrovaIlTesoroGioco extends GameDescription {
+    
+    private final Socket socket;
+
+    public TrovaIlTesoroGioco(Socket socket){
+        this.socket = socket;
+    }
 
      @Override
     public void init() throws Exception {
@@ -181,7 +195,12 @@ public class TrovaIlTesoroGioco extends GameDescription {
     }
 
     @Override
-    public void nextMove(ParserOutput p, PrintStream out) {
+    public void nextMove(ParserOutput p, PrintStream out) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
+
+
         Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
         if (p.getCommand() == null) {
             out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
@@ -193,6 +212,8 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 if (getCurrentRoom().getNorth() != null) {
                     setCurrentRoom(getCurrentRoom().getNorth());
                     move = true;
+                    out1.println(getCurrentRoom().getName());
+                    out1.println(getCurrentRoom().getDescription());
                 } else {
                     noroom = true;
                 } 
@@ -272,7 +293,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                         out.println("Hai raccolto: " + p.getObject().getDescription());
                         Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
                         if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
-                            new TrovaIlTesoroGioco().end(out);
+                            new TrovaIlTesoroGioco(socket).end(out);
                         }
                     } else {
                         out.println("Non puoi raccogliere questo oggetto.");

@@ -66,9 +66,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
         Comandi open = new Comandi(TipoComandi.OPEN, "apri");
         open.setAlias(new String[]{});
         getCommands().add(open);
-        Comandi push = new Comandi(TipoComandi.PUSH, "premi");
-        push.setAlias(new String[]{"spingi", "attiva"});
-        getCommands().add(push);
         Comandi move = new Comandi(TipoComandi.MOVE, "sposta");
         move.setAlias(new String[]{"leva", "rimuovi"});
         getCommands().add(move);
@@ -195,7 +192,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
     }
 
     @Override
-    public void nextMove(ParserOutput p, PrintStream out) throws IOException {
+    public void nextMove(ParserOutput p) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
@@ -203,8 +200,8 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
         Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
         if (p.getCommand() == null) {
-            out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
-        } else {
+            out1.println("Non ho capito cosa devo fare! Prova con un altro comando.");
+        }else {
             //move
             boolean noroom = false;
             boolean move = false;
@@ -212,8 +209,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 if (getCurrentRoom().getNorth() != null) {
                     setCurrentRoom(getCurrentRoom().getNorth());
                     move = true;
-                    out1.println(getCurrentRoom().getName());
-                    out1.println(getCurrentRoom().getDescription());
                 } else {
                     noroom = true;
                 } 
@@ -222,18 +217,20 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 if (getCurrentRoom().getSouth() != null) {
                     Oggetti chiave = new Oggetti(7, "chiave", "Una semplice chiave come molte altre.");
                     if(getCurrentRoom()==getRooms().get(3) && getInventory().contains(chiave)){
-                        System.out.println("Utilizzi la chiave che hai trovato per aprire la porta!");
+                        out1.println("Utilizzi la chiave che hai trovato per aprire la porta!");
                         setCurrentRoom(getCurrentRoom().getSouth());
                         //se sei in cucina e hai la chiave
                         move = true;
+                    
                     }
                     else if(getCurrentRoom()==getRooms().get(3) && !getInventory().contains(p.getObject())){ 
                         // se sei in cucina e non hai la chiave 
-                        System.out.println("la porta sembrerebbe essere chiusa e tu non hai la chiave...");
+                        out1.println("la porta sembrerebbe essere chiusa e tu non hai la chiave...");
                     }
                     else if(getCurrentRoom()!=getRooms().get(3)){
                         setCurrentRoom(getCurrentRoom().getSouth());
                         move = true;
+                        
                     }
                 } else {
                     noroom = true;
@@ -243,6 +240,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 if (getCurrentRoom().getEast() != null) {
                     setCurrentRoom(getCurrentRoom().getEast());
                     move = true;
+                    
                 } else {
                     noroom = true;
                 }
@@ -254,9 +252,9 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     noroom = true;
                 }
             } else if (p.getCommand().getType() == TipoComandi.INVENTORY) {
-                out.println("Nel tuo inventario ci sono:");
+                out1.println("Nel tuo inventario ci sono:");
                 for (Oggetti o : getInventory()) {
-                    out.println(o.getName() + ": " + o.getDescription());
+                    out1.println(o.getName() + ": " + o.getDescription());
                 }
             } 
             //COMANDO SPOSTA
@@ -264,7 +262,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     if (p.getObject() != null) {
                         if (p.getObject().isPickupable()) {
                             getCurrentRoom().getObjects().remove(p.getObject());
-                            System.out.println("il quadro è stato spostato!!!");
+                            out1.println("il quadro è stato spostato!!!");
                          }
                     } 
                 }else if (p.getCommand().getType() == TipoComandi.LOOK_AT) {
@@ -272,96 +270,95 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 
                     if (getCurrentRoom().getLook() != null) {
                         if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
-                            System.out.println("Dietro al Quadro c'è una cassaforte!!!");
+                            out1.println("Dietro al Quadro c'è una cassaforte!!!");
                         }
                     //sei nello studio e non hai spostato il quadro
                      else if(getCurrentRoom()==getRooms().get(5) && getCurrentRoom().getObjects().contains(quadro)) {
-                        out.println(getCurrentRoom().getLook());
+                        out1.println(getCurrentRoom().getLook());
                     //non sei nello studio
                     }else if(getCurrentRoom()!=getRooms().get(5)){
-                        out.println(getCurrentRoom().getLook());
+                        out1.println(getCurrentRoom().getLook());
                         }
                     }
                     else{
-                        System.out.println("non c'è niente di interessante qui");
+                        out1.println("non c'è niente di interessante qui");
                     }
                 } else if (p.getCommand().getType() == TipoComandi.PICK_UP) {
                 if (p.getObject() != null) {
-                    if (p.getObject().isPickupable()) {
-                        getInventory().add(p.getObject());
-                        getCurrentRoom().getObjects().remove(p.getObject());
-                        out.println("Hai raccolto: " + p.getObject().getDescription());
-                        Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
-                        if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
-                            new TrovaIlTesoroGioco(socket).end(out);
-                        }
-                    } else {
-                        out.println("Non puoi raccogliere questo oggetto.");
-                    }
+                        if (p.getObject().isPickupable()) {
+                            getInventory().add(p.getObject());
+                            getCurrentRoom().getObjects().remove(p.getObject());
+                            out1.println("Hai raccolto: " + p.getObject().getDescription());
+                            Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
+                            if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
+                                new TrovaIlTesoroGioco(socket).end(out1);
+                            }
+                        } else {
+                            out1.println("Non puoi raccogliere questo oggetto.");
+                        }  
                 } else {
-                    out.println("Non c'è niente da raccogliere qui.");
+                    out1.println("Non c'è niente da raccogliere qui.");
                 }
             } else if (p.getCommand().getType() == TipoComandi.OPEN) {
                 if (p.getObject() == null && p.getInvObject() == null) {
-                    out.println("Non c'è niente da aprire qui.");
+                    out1.println("Non c'è niente da aprire qui.");
                 } else {
                     if (p.getObject() != null) {
                         if (p.getObject().isOpenable() && p.getObject().isOpen() == false) {
                             if (p.getObject() instanceof ContenitoreOggetti) {
                                 //si trova nello studio con quadro spostato
                                 if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
-                                    Scanner scanner = new Scanner(System.in);
-                                    System.out.print("Inserisci la combinazione ");
-                                    String numero = scanner.nextLine();
+                                    out1.println("Inserisci la combinazione ");
+                                    String numero = in.readLine();
                                     String combinazione="31479566";
                                     if(numero.equals(combinazione)){
-                                        out.println("Hai aperto: " + p.getObject().getName());
+                                        out1.println("Hai aperto: " + p.getObject().getName());
                                         ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
                                     
                                         if (!c.getList().isEmpty()) {
-                                            out.print(c.getName() + " contiene:");
+                                            out1.print(c.getName() + " contiene:");
                                             Iterator<Oggetti> it = c.getList().iterator();
                                             while (it.hasNext()) {
                                                 Oggetti next = it.next();
                                                 getCurrentRoom().getObjects().add(next);
-                                                out.print(" " + next.getName());
+                                                out1.print(" " + next.getName());
                                                 it.remove();
                                             }
-                                            out.println();
+                                            out1.println();
                                             
                                         }
                                         p.getObject().setOpen(true);
                                     }
                                     else{
-                                            System.out.println("combinazione sbagliata");
+                                            out1.println("combinazione sbagliata");
                                         } 
                                 }else if(getCurrentRoom()==getRooms().get(5) && getCurrentRoom().getObjects().contains(quadro)){
-                                    System.out.println("Non vedo nessuna cassaforte");
+                                    out1.println("Non vedo nessuna cassaforte");
                                 }
                                     //non si trova nello studio
                                     else if(getCurrentRoom()!=getRooms().get(5)){
-                                    out.println("Hai aperto: " + p.getObject().getName());
+                                    out1.println("Hai aperto: " + p.getObject().getName());
                                     ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
                                     if (!c.getList().isEmpty()) {
-                                        out.print(c.getName() + " contiene:");
+                                        out1.print(c.getName() + " contiene:");
                                         Iterator<Oggetti> it = c.getList().iterator();
                                         while (it.hasNext()) {
                                             Oggetti next = it.next();
                                             getCurrentRoom().getObjects().add(next);
-                                            out.print(" " + next.getName());
+                                            out1.print(" " + next.getName());
                                             it.remove();
                                         }
-                                        out.println();
+                                        out1.println();
                                     }
                                     p.getObject().setOpen(true);
                                 }
                                 
                             } else {
-                                out.println("Hai aperto: " + p.getObject().getName());
+                                out1.println("Hai aperto: " + p.getObject().getName());
                                 p.getObject().setOpen(true);
                             }
                         } else {
-                            out.println("Non puoi aprire questo oggetto.");
+                            out1.println("Non puoi aprire questo oggetto.");
                         }
                     }
                     if (p.getInvObject() != null) {
@@ -369,54 +366,38 @@ public class TrovaIlTesoroGioco extends GameDescription {
                             if (p.getInvObject() instanceof ContenitoreOggetti) {
                                 ContenitoreOggetti c = (ContenitoreOggetti) p.getInvObject();
                                 if (!c.getList().isEmpty()) {
-                                    out.print(c.getName() + " contiene:");
+                                    out1.print(c.getName() + " contiene:");
                                     Iterator<Oggetti> it = c.getList().iterator();
                                     while (it.hasNext()) {
                                         Oggetti next = it.next();
                                         getInventory().add(next);
-                                        out.print(" " + next.getName());
+                                        out1.print(" " + next.getName());
                                         it.remove();
                                     }
-                                    out.println();
+                                    out1.println();
                                 }
                                 p.getInvObject().setOpen(true);
                             } else {
                                 p.getInvObject().setOpen(true);
                             }
-                            out.println("Hai aperto nel tuo inventario: " + p.getInvObject().getName());
+                            out1.println("Hai aperto nel tuo inventario: " + p.getInvObject().getName());
                         } else {
-                            out.println("Non puoi aprire questo oggetto.");
+                            out1.println("Non puoi aprire questo oggetto.");
                         }
                     }
                 }
-            } else if (p.getCommand().getType() == TipoComandi.PUSH) {
-                //ricerca oggetti pushabili
-                if (p.getObject() != null && p.getObject().isPushable()) {
-                    out.println("Hai premuto: " + p.getObject().getName());
-                    if (p.getObject().getId() == 3) {
-                        end(out);
-                    }
-                } else if (p.getInvObject() != null && p.getInvObject().isPushable()) {
-                    out.println("Hai premuto: " + p.getInvObject().getName());
-                    if (p.getInvObject().getId() == 3) {
-                        end(out);
-                    }
-                } else {
-                    out.println("Non ci sono oggetti che puoi premere qui.");
-                }
-            }
-            if (noroom) {
-                out.println("Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...");
+            } if (noroom) {
+                out1.println("Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...");
             } else if (move) {
-                out.println(getCurrentRoom().getName());
-                out.println("================================================");
-                out.println(getCurrentRoom().getDescription());
+                out1.println(getCurrentRoom().getName());
+                out1.println("================================================");
+                out1.println(getCurrentRoom().getDescription());
             }
         }
     }
     //DA MODIFICAREEE
-    private void end(PrintStream out) {
-        out.println("La pergamena scritta da tuo zio che dice....L'amore per famiglia è più importante di qualsiasi tesoro....Tuo zio te l'ha fatta un altra volta!!"+"\nFINE");
-        System.exit(0);
+    private void end(PrintWriter out1) {
+        out1.println("La pergamena scritta da tuo zio che dice....L'amore per famiglia è più importante di qualsiasi tesoro....Tuo zio te l'ha fatta un altra volta!!"+"\nFINE");
+        //System.exit(0);
     }
 }

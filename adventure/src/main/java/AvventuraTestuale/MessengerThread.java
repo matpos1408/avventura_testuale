@@ -85,15 +85,7 @@ public class MessengerThread extends Thread {
         this.setName(name);
     }
 
-    /**
-     *
-     * @param message
-     */
-    public void sendMessage(String message) {
-        if (out != null) {
-            out.println(message);
-        }
-    }
+  
 
     /**
      *
@@ -120,46 +112,10 @@ public class MessengerThread extends Thread {
                                 username = name;
                                 Engine engine = new Engine(new TrovaIlTesoroGioco(socket),socket);
                                 engine.execute();
+                                run=false;
                             } catch (Exception ex) {
                                 out.println("#error " + ex.getMessage());
                             }
-                        }
-                    } else if (findcmd && matcher.group().equalsIgnoreCase("#send")) {
-                        String name = null;
-                        String msg = null;
-                        if (matcher.find()) {
-                            name = matcher.group();
-                            if (matcher.end() < str.length()) {
-                                msg = str.substring(matcher.end()).trim();
-                            }
-                        }
-                        if (name != null && msg != null) {
-                            try {
-                                if (username != null) {
-                                    md.sendMessage(username, name, msg);
-                                } else {
-                                    md.sendMessage(name, msg);
-                                }
-                                out.println("#ok");
-                            } catch (Exception ex) {
-                                out.println("#error " + ex.getMessage());
-                            }
-                        }
-                    } else if (findcmd && matcher.group().equalsIgnoreCase("#remove")) {
-                        String name = null;
-                        if (matcher.find()) {
-                            name = matcher.group();
-                        }
-                        try {
-                            if (name != null) {
-                                md.removeUser(name);
-                                out.println("#ok");
-                            } else if (username != null) {
-                                md.removeUser(username);
-                                out.println("#ok");
-                            }
-                        } catch (Exception ex) {
-                            out.println("#error " + ex.getMessage());
                         }
                     } else if (findcmd && matcher.group().equalsIgnoreCase("#exit")) {
                         run = false;

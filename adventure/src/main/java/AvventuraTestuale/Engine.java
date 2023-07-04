@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -29,6 +28,8 @@ public class Engine {
     private Parser parser;
 
     private final Socket socket;
+    
+    private boolean run = true;
 
     public Engine(GameDescription game, Socket socket) {
         this.game = game;
@@ -56,28 +57,20 @@ public class Engine {
         out.println();
         out.println(game.getCurrentRoom().getDescription());
         out.println();
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) {
-            String command = scanner.nextLine();
+        
+        while (run) {
+            String command = in.readLine();
             ParserOutput p = parser.parse(command, game.getCommands(), game.getCurrentRoom().getObjects(), game.getInventory());
             if (p == null || p.getCommand() == null) {
-                System.out.println("Non capisco quello che mi vuoi dire.");
+                out.println("Non capisco quello che mi vuoi dire.");
             } else if (p.getCommand() != null && p.getCommand().getType() == TipoComandi.END) {
-                System.out.println("Addio!");
+                out.println("Addio!");
                 break;
-            } else {
-                game.nextMove(p, System.out);
-                System.out.println();
+            }else {
+                game.nextMove(p);
+                out.println();
             }
         }
+        
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    /*public static void main(String[] args) {
-        Engine engine = new Engine(new TrovaIlTesoroGioco());
-        engine.execute();
-    }*/
-
 }

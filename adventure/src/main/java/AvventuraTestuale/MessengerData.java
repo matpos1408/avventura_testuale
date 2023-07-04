@@ -50,48 +50,4 @@ public class MessengerData {
         }
     }
 
-    /**
-     *
-     * @param username
-     * @param message
-     * @throws Exception
-     */
-    public synchronized void sendMessage(String username, String message) throws Exception {
-        MessengerThread t = clients.get(username);
-        if (t != null) {
-            t.sendMessage(message);
-        } else {
-            throw new Exception("L'utente non esiste");
-        }
-    }
-
-    /**
-     *
-     * @param sender
-     * @param username
-     * @param message
-     * @throws Exception
-     */
-    public synchronized void sendMessage(String sender, String username, String message) throws Exception {
-        MessengerThread t = clients.get(username);
-        if (t != null) {
-            t.sendMessage(sender + ": " + message);
-        } else {
-            throw new Exception("L'utente non esiste");
-        }
-    }
-
-    /**
-     *
-     * @param username
-     * @throws Exception
-     */
-    public synchronized void removeUser(String username) throws Exception {
-        if (clients.containsKey(username)) {
-            clients.remove(username);
-        } else {
-            throw new Exception("Utente inesistente");
-        }
-    }
-
 }

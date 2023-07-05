@@ -199,6 +199,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
 
         Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
+    
         if (p.getCommand() == null) {
             out1.println("Non ho capito cosa devo fare! Prova con un altro comando.");
         }else {
@@ -292,6 +293,14 @@ public class TrovaIlTesoroGioco extends GameDescription {
                             Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
                             if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
                                 new TrovaIlTesoroGioco(socket).end(out1);
+                                boolean flag=true;
+                                do{
+                                    out1.println("digita #exit per terminare");
+                                    String risposta=in.readLine();
+                                    if(risposta.equals("#exit")){
+                                        flag=false;
+                                    }                                    
+                                }while(flag==true);
                             }
                         } else {
                             out1.println("Non puoi raccogliere questo oggetto.");
@@ -394,10 +403,11 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 out1.println(getCurrentRoom().getDescription());
             }
         }
+    
     }
     //DA MODIFICAREEE
-    private void end(PrintWriter out1) {
+    private void end(PrintWriter out1) throws IOException {
         out1.println("La pergamena scritta da tuo zio che dice....L'amore per famiglia è più importante di qualsiasi tesoro....Tuo zio te l'ha fatta un altra volta!!"+"\nFINE");
-        //System.exit(0);
+
     }
 }

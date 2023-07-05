@@ -112,7 +112,6 @@ public class MessengerThread extends Thread {
                                 username = name;
                                 Engine engine = new Engine(new TrovaIlTesoroGioco(socket),socket);
                                 engine.execute();
-                                run=false;
                             } catch (Exception ex) {
                                 out.println("#error " + ex.getMessage());
                             }

@@ -66,11 +66,11 @@ public class Engine {
             } else if (p.getCommand() != null && p.getCommand().getType() == TipoComandi.END) {
                 out.println("Addio!");
                 break;
+                
             }else {
                 game.nextMove(p);
                 out.println();
             }
         }
-        
     }
 }

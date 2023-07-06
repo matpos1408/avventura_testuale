@@ -17,16 +17,40 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javax.swing.ImageIcon;
+
 
 /**
  *
  * @author Mattia e Vito
  */
 public class NewJDialog extends javax.swing.JDialog {
+       
+        ImageIcon bagno = new ImageIcon("img/bagno.png");
+        ImageIcon salotto = new ImageIcon("img/salotto.png");
+        ImageIcon cabinaArmadio1 = new ImageIcon("img/cabina_armadio1.png");
+        ImageIcon cabinaArmadio2 = new ImageIcon("img/cabina_armadio2.png");
+        ImageIcon cameraDaLetto1 = new ImageIcon("img/camera1.png");
+        ImageIcon cameraDaLetto2 = new ImageIcon("img/camera2.png");
+        ImageIcon cameraDaLetto3 = new ImageIcon("img/camera3.png");
+        ImageIcon stanzetta1 = new ImageIcon("img/cameretta1.png");
+        ImageIcon stanzetta2 = new ImageIcon("img/cameretta2.png");
+        ImageIcon stanzetta3 = new ImageIcon("img/cameretta3.png");
+        ImageIcon corridoio = new ImageIcon("img/corridoio.png");
+        ImageIcon cucina1 = new ImageIcon("img/cucina1.png");
+        ImageIcon cucina2 = new ImageIcon("img/cucina2.png");
+        ImageIcon sgabuzzino1 = new ImageIcon("img/stanzino1.png");
+        ImageIcon sgabuzzino2 = new ImageIcon("img/stanzino2.png");
+        ImageIcon sgabuzzino3 = new ImageIcon("img/stanzino3.png");
+        ImageIcon studio1 = new ImageIcon("img/studio1.png");
+        ImageIcon studio2 = new ImageIcon("img/studio2.png");
+        ImageIcon studio3 = new ImageIcon("img/studio3.png");
+        ImageIcon studio4 = new ImageIcon("img/studio4.png");
+       
+        
+        
     
-    private class ClientThread extends Thread{
+       private class ClientThread extends Thread{
         
         private  BufferedReader in = null;
         
@@ -43,6 +67,8 @@ public class NewJDialog extends javax.swing.JDialog {
         public void run(){
             while(run){
                 try{
+                    
+                    jLabel1.setIcon(studio1);
                     textArea.setText(textArea.getText() + in.readLine() + "\n");
                     //SPOSTARE IL CURSORE ALLA FINE
                     textArea.setCaretPosition(textArea.getDocument().getLength());
@@ -98,9 +124,14 @@ public class NewJDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(39, 27, 32));
+        jPanel1.setForeground(new java.awt.Color(39, 27, 32));
+
+        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 none(evt);
@@ -114,9 +145,13 @@ public class NewJDialog extends javax.swing.JDialog {
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
+        jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(jTextArea1);
 
+        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(39, 2, 32));
         jButton1.setText("Invia");
         jButton1.setToolTipText("Clicca per inviare");
         jButton1.setName(""); // NOI18N
@@ -126,6 +161,10 @@ public class NewJDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(39, 2, 32));
+        jLabel1.setForeground(new java.awt.Color(39, 27, 32));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -133,7 +172,8 @@ public class NewJDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField1)
                         .addGap(18, 18, 18)
@@ -145,11 +185,13 @@ public class NewJDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -170,6 +212,9 @@ public class NewJDialog extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          String message = jTextField1.getText();
+         // settaggio provvisorio immagine per prova
+         
+         
             if( message != null && message.length()>0){
                 out.println(message);
                 jTextField1.setText("");
@@ -237,6 +282,7 @@ public class NewJDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

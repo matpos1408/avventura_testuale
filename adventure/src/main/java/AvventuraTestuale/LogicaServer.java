@@ -50,17 +50,15 @@ import java.net.Socket;
 
 /**
  *
- * @author pierpaolo
+ * @author vito e mattia
  */
-public class MessengerThread extends Thread {
+public class LogicaServer extends Thread {
 
     private final Socket socket;
 
     private boolean run = true;
 
-    private String username;
-
-    private final MessengerData md;
+    private final Utenti md;
 
     private PrintWriter out = null;
 
@@ -69,7 +67,7 @@ public class MessengerThread extends Thread {
      * @param socket
      * @param md
      */
-    public MessengerThread(Socket socket, MessengerData md) {
+    public LogicaServer(Socket socket, Utenti md) {
         this.socket = socket;
         this.md = md;
     }
@@ -80,7 +78,7 @@ public class MessengerThread extends Thread {
      * @param md
      * @param name
      */
-    public MessengerThread(Socket socket, MessengerData md, String name) {
+    public LogicaServer(Socket socket, Utenti md, String name) {
         this(socket, md);
         this.setName(name);
     }
@@ -109,18 +107,15 @@ public class MessengerThread extends Thread {
                             try {
                                 md.addUser(name, this);
                                 out.println("#ok");
-                                username = name;
                                 Engine engine = new Engine(new TrovaIlTesoroGioco(socket),socket);
                                 engine.execute();
                             } catch (Exception ex) {
                                 out.println("#error " + ex.getMessage());
                             }
                         }
-                    } else if (findcmd && matcher.group().equalsIgnoreCase("#exit")) {
-                        run = false;
-                    } else {
-                        out.println("#error Comando sconosciuto");
-                    }
+                    } else if (findcmd && !matcher.group().equalsIgnoreCase("#name")) {
+                        out.println("inserisci il comando corretto");
+                    } 
                 }
             }
         } catch (IOException ex) {

@@ -30,11 +30,11 @@ import java.util.Map;
 
 /**
  *
- * @author pierpaolo
+ * @author vito e mattia
  */
-public class MessengerData {
+public class Utenti {
 
-    private final Map<String, MessengerThread> clients = new HashMap<>();
+    private final Map<String, LogicaServer> clients = new HashMap<>();
 
     /**
      *
@@ -42,7 +42,7 @@ public class MessengerData {
      * @param thread
      * @throws Exception
      */
-    public synchronized void addUser(String username, MessengerThread thread) throws Exception {
+    public synchronized void addUser(String username, LogicaServer thread) throws Exception {
         if (clients.containsKey(username)) {
             throw new Exception("Utente già esistente");
         } else {

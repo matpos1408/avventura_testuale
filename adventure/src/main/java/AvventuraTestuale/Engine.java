@@ -1,7 +1,6 @@
 
 package AvventuraTestuale;
 
-import AvventuraTestuale.Gioco.TrovaIlTesoroGioco;
 import AvventuraTestuale.Parser.Parser;
 import AvventuraTestuale.Parser.ParserOutput;
 import AvventuraTestuale.Tipo.TipoComandi;

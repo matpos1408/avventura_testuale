@@ -23,23 +23,23 @@ import java.util.UUID;
 
 /**
  *
- * @author pierpaolo
+ * @author vito e mattia
  */
-public class MessengerServer {
+public class ServerStart {
 
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        MessengerData md = new MessengerData();
+        Utenti md = new Utenti();
         ServerSocket s = new ServerSocket(6666);
         System.out.println("Started: " + s);
         try {
             while (true) {
                 Socket socket = s.accept();
                 //UUID è utilizzato per creare un id univoco da utilizzare come nome del Thread
-                Thread t = new MessengerThread(socket, md, UUID.randomUUID().toString());
+                Thread t = new LogicaServer(socket, md, UUID.randomUUID().toString());
                 t.start();
             }
         } finally {

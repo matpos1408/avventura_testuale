@@ -7,8 +7,6 @@ import AvventuraTestuale.Tipo.Comandi;
 import AvventuraTestuale.Tipo.Stanze;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -18,11 +18,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
+
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Iterator;
-import java.util.Scanner;
+
 
 /**
  *
@@ -140,8 +140,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
         comodino.setPickupable(false);
         comodino.setOpen(false);
         cameraDaLetto.getObjects().add(comodino);
-        fogliettino2.setPushable(false);
-        fogliettino2.setPush(false);
         comodino.add(fogliettino2);
 
         //creazione barattolo nello sgabuzzino   
@@ -151,20 +149,16 @@ public class TrovaIlTesoroGioco extends GameDescription {
         barattolo.setPickupable(false);
         barattolo.setOpen(false);
         sgabuzzino.getObjects().add(barattolo);
-        fogliettino3.setPushable(false);
-        fogliettino3.setPush(false);
         barattolo.add(fogliettino3);
 
 
         ContenitoreOggetti armadio = new ContenitoreOggetti(9, "armadio", "Un armadio ");
         Oggetti chiave = new Oggetti(7, "chiave", "Chiave. Questa chiave probabilmente serve ad aprire una porta della casa.");
-        armadio.setAlias(new String[]{"mobile"});
+        armadio.setAlias(new String[]{"key"});
         armadio.setOpenable(true);
         armadio.setPickupable(false);
         armadio.setOpen(false);
         stanzetta.getObjects().add(armadio);
-        chiave.setPush(false);
-        chiave.setPushable(false);
         chiave.setPickupable(true);
         armadio.add(chiave);
 
@@ -172,9 +166,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
         Oggetti quadro = new Oggetti(8, "quadro", "Il quadro con la raffigurazione di tuo zio.");
         quadro.setAlias(new String[]{"dipinto"});
         studio.getObjects().add(quadro);
-        quadro.setPush(false);
-        quadro.setPushable(false);
-
+    
        //creazione cassaforte
         ContenitoreOggetti cassaforte = new ContenitoreOggetti(10, "cassaforte", "Una cassaforte ");
         Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
@@ -183,8 +175,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
         cassaforte.setPickupable(false);
         cassaforte.setOpen(false);
         studio.getObjects().add(cassaforte);
-        tesoro.setPush(false);
-        tesoro.setPushable(false);
         tesoro.setPickupable(true);
         cassaforte.add(tesoro);
 
@@ -264,8 +254,9 @@ public class TrovaIlTesoroGioco extends GameDescription {
                         if (p.getObject().isPickupable()) {
                             getCurrentRoom().getObjects().remove(p.getObject());
                             out1.println("il quadro è stato spostato!!!");
-                         }
-                    } 
+                            
+                        }
+                    }    
                 }else if (p.getCommand().getType() == TipoComandi.LOOK_AT) {
                     //sei nello studio e hai spostato il quadro
                 
@@ -287,21 +278,32 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 } else if (p.getCommand().getType() == TipoComandi.PICK_UP) {
                 if (p.getObject() != null) {
                         if (p.getObject().isPickupable()) {
-                            getInventory().add(p.getObject());
-                            getCurrentRoom().getObjects().remove(p.getObject());
-                            out1.println("Hai raccolto: " + p.getObject().getDescription());
-                            Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
-                            if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
-                                new TrovaIlTesoroGioco(socket).end(out1);
-                                boolean flag=true;
-                                do{
-                                    out1.println("digita #exit per terminare");
-                                    String risposta=in.readLine();
-                                    if(risposta.equals("#exit")){
-                                        flag=false;
-                                    }                                    
-                                }while(flag==true);
+                            if(p.getObject() != null){
+                                if(p.getObject().equals(quadro)){
+                                    out1.println("non puoi prendere il quadro");
+                                }
+                                else{
+                                    getInventory().add(p.getObject());
+                                    getCurrentRoom().getObjects().remove(p.getObject());
+                                    out1.println("Hai raccolto: " + p.getObject().getDescription());
+                                    Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
+                                    if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
+                                        new TrovaIlTesoroGioco(socket).end(out1);
+                                        boolean flag=true;
+                                        do{
+                                            out1.println("digita #exit per terminare");
+                                            String risposta=in.readLine();
+                                            if(risposta.equals("#exit")){
+                                                flag=false;
+                                            }                                       
+                                        }while(flag==true);
+                                    }
+                                }
+                            }    
+                            else{
+                                    out1.println("cosa vorresti prendere?");
                             }
+                            
                         } else {
                             out1.println("Non puoi raccogliere questo oggetto.");
                         }  

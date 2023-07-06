@@ -6,7 +6,7 @@ package AvventuraTestuale;
 
 /**
  *
- * @author UTENTE
+ * @author Vito e Mattia
  */
 /*
  * Copyright (C) 2020 pierpaolo

@@ -52,10 +52,12 @@ public class Engine {
         out.println("=========================================");
         out.println("* Avventura Testuale v. 0.1 - 2022-2023 *");
         out.println("=========================================");
-        out.println(game.getCurrentRoom().getName());
+        out.println();
+        out.println(game.getCurrentRoom().getImages());
         out.println();
         out.println(game.getCurrentRoom().getDescription());
-        out.println();
+        
+        
         
         while (run) {
             String command = in.readLine();

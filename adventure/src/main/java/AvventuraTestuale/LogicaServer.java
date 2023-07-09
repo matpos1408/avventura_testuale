@@ -94,7 +94,8 @@ public class LogicaServer extends Thread {
             System.out.println("Connessione accettata: " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            while (run) {
+            Boolean flag=false;
+            do{
                 String str = in.readLine();
                 if (str != null) {
                     str = str.trim();
@@ -107,17 +108,18 @@ public class LogicaServer extends Thread {
                             try {
                                 md.addUser(name, this);
                                 out.println("#ok");
+                                flag=true;
                                 Engine engine = new Engine(new TrovaIlTesoroGioco(socket),socket);
                                 engine.execute();
                             } catch (Exception ex) {
                                 out.println("#error " + ex.getMessage());
                             }
                         }
-                    } else if (findcmd && !matcher.group().equalsIgnoreCase("#name")) {
+                    } /*else if (findcmd && !matcher.group().equalsIgnoreCase("#name")) {
                         out.println("inserisci il comando corretto");
-                    } 
+                    } */
                 }
-            }
+            }while(flag==false);
         } catch (IOException ex) {
             System.err.println(ex);
         } finally {

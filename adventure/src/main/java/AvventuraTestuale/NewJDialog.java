@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
 import java.awt.event.WindowEvent;
-
+import java.util.Random;
 /**
  *
  * @author Mattia e Vito
@@ -76,8 +76,11 @@ public class NewJDialog extends javax.swing.JDialog {
         @Override
         public void run(){
           audioThread.start();
+          int random = (int) (Math.random() * 6) + 1;
+          ImageIcon copertina = new ImageIcon("img/copertina/copertina" + random +".png");
+          jLabel1.setIcon(copertina);  
          
-            while(run){
+        while(run){
                 try{
                     
                   String cmd=in.readLine();

@@ -81,14 +81,43 @@ public class TrovaIlTesoroGioco extends GameDescription {
         cameraDaLetto.setLook("C'è un comodino con il cassetto leggermente aperto.");
         Stanze corridoio = new Stanze(4, "Corridoio", "é un corridoio molto lungo \nCosì lungo da collegare solamente due stanze al salotto.");
         corridoio.setLook("Il corridoio è poco illuminato ma vedi abbastanza da capire che non c'è nulla.");
-        Stanze stanzetta = new Stanze(4, "Stanzetta", "Questa è la stanza per gli ospiti\nTuo zio non aveva molti amici ..infatti la stanza è come nuova.");
+        Stanze stanzetta = new Stanze(5, "Stanzetta", "Questa è la stanza per gli ospiti\nTuo zio non aveva molti amici ..infatti la stanza è come nuova.");
         stanzetta.setLook("C'è un armadio bianco, sarebbe opportuno darli un occhiata.");
-        Stanze studio = new Stanze(4, "studio", "Lo studio dello zio\nIn questo studio lo zio ha scritto alcuni dei suoi più grandi articoli.");
+        Stanze studio = new Stanze(6, "studio", "Lo studio dello zio\nIn questo studio lo zio ha scritto alcuni dei suoi più grandi articoli.");
         studio.setLook("C'è una scrivania piena di penne e di fogli ma noti anche un quadro con la sua faccia ,lo zio non te lo ricordavi così egocentrico.");
-        Stanze cabinaArmadio = new Stanze(4, "Cabina Armadio", "Una comunissima cabina armadio....piena di vestiti tutti dello stesso colore ...il grigio.");
+        Stanze cabinaArmadio = new Stanze(7, "Cabina Armadio", "Una comunissima cabina armadio....piena di vestiti tutti dello stesso colore ...il grigio.");
         cabinaArmadio.setLook("Tra questi vedi la famosa giacca che metteva spesso tuo zio ,dalla tasca spunta un fogliettino.");
-        Stanze sgabuzzino = new Stanze(4, "sgabuzzino", "\nQuesta stanza non te la ricordi...probabilmente perchè non ci sei mai entrato."+"\nLa stanza è poco illuminata e piena di polvere");
+        Stanze sgabuzzino = new Stanze(8, "sgabuzzino", "\nQuesta stanza non te la ricordi...probabilmente perchè non ci sei mai entrato."+"\nLa stanza è poco illuminata e piena di polvere");
         sgabuzzino.setLook("Vedi sopra la credenza un barattolo trasparente con all'interno un fogliettino!.");
+        
+         //inizializzazione immagini
+         String salotto1="salotto";
+         salotto.setImages(salotto1);
+         
+         String corridoio1="corridoio";
+         corridoio.setImages(corridoio1);
+         
+         String studio1="studio";
+         studio.setImages(studio1);
+         
+         String stanzetta1="stanzetta";
+         stanzetta.setImages(stanzetta1);
+         
+         String cucina1="cucina";
+         cucina.setImages(cucina1);
+         
+         String bagno1="bagno";
+         bagno.setImages(bagno1);
+         
+         String cameraDaLetto1="cameraDaLetto";
+         cameraDaLetto.setImages(cameraDaLetto1);
+         
+         String sgabuzzino1="sgabuzzino";
+         sgabuzzino.setImages(sgabuzzino1);
+         
+         String cabinaArmadio1="cabinaArmadio";
+         cabinaArmadio.setImages(cabinaArmadio1);
+        
         
         //mappa
         
@@ -177,7 +206,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
         studio.getObjects().add(cassaforte);
         tesoro.setPickupable(true);
         cassaforte.add(tesoro);
-
         
     }
 
@@ -199,6 +227,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
             if (p.getCommand().getType() == TipoComandi.NORD) {
                 if (getCurrentRoom().getNorth() != null) {
                     setCurrentRoom(getCurrentRoom().getNorth());
+                    out1.println(getCurrentRoom().getImages());
                     move = true;
                 } else {
                     noroom = true;
@@ -210,6 +239,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     if(getCurrentRoom()==getRooms().get(3) && getInventory().contains(chiave)){
                         out1.println("Utilizzi la chiave che hai trovato per aprire la porta!");
                         setCurrentRoom(getCurrentRoom().getSouth());
+                        out1.println(getCurrentRoom().getImages());
                         //se sei in cucina e hai la chiave
                         move = true;
                     
@@ -220,6 +250,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                     }
                     else if(getCurrentRoom()!=getRooms().get(3)){
                         setCurrentRoom(getCurrentRoom().getSouth());
+                        out1.println(getCurrentRoom().getImages());
                         move = true;
                         
                     }
@@ -230,6 +261,8 @@ public class TrovaIlTesoroGioco extends GameDescription {
             } else if (p.getCommand().getType() == TipoComandi.EAST) {
                 if (getCurrentRoom().getEast() != null) {
                     setCurrentRoom(getCurrentRoom().getEast());
+                    out1.println(getCurrentRoom().getImages());
+
                     move = true;
                     
                 } else {
@@ -238,6 +271,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
             } else if (p.getCommand().getType() == TipoComandi.WEST) {
                 if (getCurrentRoom().getWest() != null) {
                     setCurrentRoom(getCurrentRoom().getWest());
+                    out1.println(getCurrentRoom().getImages());
                     move = true;
                 } else {
                     noroom = true;
@@ -252,8 +286,12 @@ public class TrovaIlTesoroGioco extends GameDescription {
             else if (p.getCommand().getType() == TipoComandi.MOVE) {
                     if (p.getObject() != null) {
                         if (p.getObject().isPickupable()) {
+                            String studio="studio ";
+                            getCurrentRoom().setImages(studio);
+                            out1.println( getCurrentRoom().getImages());
                             getCurrentRoom().getObjects().remove(p.getObject());
                             out1.println("il quadro è stato spostato!!!");
+                            
                             
                         }
                     }    
@@ -286,8 +324,37 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                     getInventory().add(p.getObject());
                                     getCurrentRoom().getObjects().remove(p.getObject());
                                     out1.println("Hai raccolto: " + p.getObject().getDescription());
+                                    
+                                    if(getCurrentRoom()==getRooms().get(4)){
+                                         String stanzetta  = "stanzetta  ";
+                                         getCurrentRoom().setImages(stanzetta );
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    if(getCurrentRoom()==getRooms().get(1)){
+                                        String cameraDaLetto= "cameraDaLetto  ";
+                                        getCurrentRoom().setImages(cameraDaLetto );
+                                        out1.println(getCurrentRoom().getImages());
+                                    }
+                                    if(getCurrentRoom()==getRooms().get(7)){
+                                         String sgabuzzino   = "sgabuzzino  ";
+                                         getCurrentRoom().setImages(sgabuzzino );
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    if(getCurrentRoom()==getRooms().get(6)){
+                                         String cabinaArmadio   = "cabinaArmadio ";
+                                         getCurrentRoom().setImages(cabinaArmadio );
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    // SETTAGGIO IMMAGINE CUCINA SENZA FOGLIETTO
+                                    if(getCurrentRoom()==getRooms().get(3)){
+                                         String cucina   = "cucina ";
+                                         getCurrentRoom().setImages(cucina );
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    
                                     Oggetti tesoro = new Oggetti(11, "tesoro", "Una pergamena.");
                                     if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(tesoro)){
+                                        out1.println("studio   ");
                                         new TrovaIlTesoroGioco(socket).end(out1);
                                         boolean flag=true;
                                         do{
@@ -323,6 +390,9 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                     String numero = in.readLine();
                                     String combinazione="31479566";
                                     if(numero.equals(combinazione)){
+                                        String studio="studio  ";
+                                        getCurrentRoom().setImages(studio);
+                                        out1.println( getCurrentRoom().getImages());
                                         out1.println("Hai aperto: " + p.getObject().getName());
                                         ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
                                     
@@ -348,6 +418,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                 }
                                     //non si trova nello studio
                                     else if(getCurrentRoom()!=getRooms().get(5)){
+                                   
                                     out1.println("Hai aperto: " + p.getObject().getName());
                                     ContenitoreOggetti c = (ContenitoreOggetti) p.getObject();
                                     if (!c.getList().isEmpty()) {
@@ -362,6 +433,24 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                         out1.println();
                                     }
                                     p.getObject().setOpen(true);
+                                    if(getCurrentRoom()==getRooms().get(4)){
+                                         
+                                         String stanzetta = "stanzetta ";
+                                         getCurrentRoom().setImages(stanzetta); 
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    if(getCurrentRoom()==getRooms().get(1)){
+                                       
+                                         String cameraDaLetto = "cameraDaLetto ";
+                                         getCurrentRoom().setImages(cameraDaLetto); 
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    if(getCurrentRoom()==getRooms().get(7)){
+                                         String sgabuzzino1 ="sgabuzzino ";
+                                         getCurrentRoom().setImages(sgabuzzino1); 
+                                         out1.println(getCurrentRoom().getImages());
+                                    }
+                                    
                                 }
                                 
                             } else {
@@ -400,7 +489,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
             } if (noroom) {
                 out1.println("Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...");
             } else if (move) {
-                out1.println(getCurrentRoom().getName());
+                //out1.println(getCurrentRoom().getName());
                 out1.println("================================================");
                 out1.println(getCurrentRoom().getDescription());
             }

@@ -29,6 +29,8 @@ public class Stanze {
     private Stanze west = null;
     
     private final List<Oggetti> objects=new ArrayList<>();
+    
+    private  String images;
 
     public Stanze(int id) {
         this.id = id;
@@ -98,6 +100,14 @@ public class Stanze {
 
     public List<Oggetti> getObjects() {
         return objects;
+    }
+    
+    public String getImages() {
+        return images;
+    }
+    
+    public void setImages(String images) {
+        this.images=images;
     }
 
     @Override

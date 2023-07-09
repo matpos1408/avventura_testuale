@@ -4,21 +4,21 @@
  */
 package AvventuraTestuale;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import static java.lang.System.in;
-import static java.lang.System.out;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
-
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -48,10 +48,19 @@ public class NewJDialog extends javax.swing.JDialog {
         ImageIcon studio4 = new ImageIcon("img/studio4.png");
        
         
+        //Thread per l'audio
+        public class audioThread extends Thread{
+            public void run() {
+                audio audio = new audio();
+                audio.playAudio("audio/music.wav"); 
+            }
+        }    
         
     
-       private class ClientThread extends Thread{
         
+        
+       private class ClientThread extends Thread{
+       
         private  BufferedReader in = null;
         
         private JTextArea textArea;
@@ -62,26 +71,99 @@ public class NewJDialog extends javax.swing.JDialog {
             this.in =in;
             this.textArea = textArea;
         }
-        
+        audioThread audioThread = new audioThread();
+       
         @Override
         public void run(){
+          audioThread.start();
+         
             while(run){
                 try{
                     
-                    jLabel1.setIcon(studio1);
-                    textArea.setText(textArea.getText() + in.readLine() + "\n");
-                    //SPOSTARE IL CURSORE ALLA FINE
-                    textArea.setCaretPosition(textArea.getDocument().getLength());
+                  String cmd=in.readLine();
+                       if(cmd.equals("salotto")){
+                            jLabel1.setIcon(salotto);
+                        }
+                       if(cmd.equals("corridoio")){
+                           jLabel1.setIcon(corridoio);
+                       }
+                       if(cmd.equals("studio")){
+                           jLabel1.setIcon(studio1);
+                       }
+                       if(cmd.equals("studio ")){
+                           jLabel1.setIcon(studio2);
+                       }
+                       if(cmd.equals("studio  ")){
+                           jLabel1.setIcon(studio3);
+                       }
+                       if(cmd.equals("studio   ")){
+                           jLabel1.setIcon(studio4);
+                       }
+                       if(cmd.equals("stanzetta")){
+                           jLabel1.setIcon(stanzetta1);
+                       }
+                       if(cmd.equals("stanzetta ")){
+                           jLabel1.setIcon(stanzetta2);
+                       }
+                       if(cmd.equals("stanzetta  ")){
+                           jLabel1.setIcon(stanzetta3);
+                       }
+                        if(cmd.equals("cabinaArmadio")){
+                           jLabel1.setIcon(cabinaArmadio1);
+                       }
+                         if(cmd.equals("cabinaArmadio ")){
+                           jLabel1.setIcon(cabinaArmadio2);
+                       }
+                         if(cmd.equals("bagno")){
+                           jLabel1.setIcon(bagno);
+                       }
+                          if(cmd.equals("cameraDaLetto")){
+                           jLabel1.setIcon(cameraDaLetto1);
+                       }
+                          if(cmd.equals("cameraDaLetto ")){
+                           jLabel1.setIcon(cameraDaLetto3);
+                       }
+                           if(cmd.equals("cameraDaLetto  ")){
+                           jLabel1.setIcon(cameraDaLetto2);
+                       }
+                           if(cmd.equals("cucina")){
+                           jLabel1.setIcon(cucina1);
+                       }
+                           if(cmd.equals("cucina ")){
+                           jLabel1.setIcon(cucina2);
+                       }
+                            if(cmd.equals("sgabuzzino")){
+                           jLabel1.setIcon(sgabuzzino1);
+                       }
+                            if(cmd.equals("sgabuzzino ")){
+                           jLabel1.setIcon(sgabuzzino2);
+                       }
+                            if(cmd.equals("sgabuzzino  ")){
+                           jLabel1.setIcon(sgabuzzino3);
+                       }
+                       
+                           
+                            
+                       else{
+                           textArea.setText(textArea.getText() + cmd + "\n");
+                           textArea.setCaretPosition(textArea.getDocument().getLength());
+                       }
+                     
                 }
                 catch(IOException ex){
                     System.err.println(ex);
                 }
             }
+           audioThread.interrupt();
+           
         }
         
         
     }
     
+     
+       
+       
     private  BufferedReader in = null;
     
     private PrintWriter out = null;
@@ -103,8 +185,10 @@ public class NewJDialog extends javax.swing.JDialog {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                 ClientThread ct = new ClientThread(in,jTextArea1);
-                
+               
                 ct.start();
+                
+               
             }catch(IOException ex){
                 
             }
@@ -185,8 +269,8 @@ public class NewJDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -212,13 +296,13 @@ public class NewJDialog extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          String message = jTextField1.getText();
-         // settaggio provvisorio immagine per prova
-         
          
             if( message != null && message.length()>0){
                 out.println(message);
                 jTextField1.setText("");
             } 
+            
+            
     }//GEN-LAST:event_jButton1ActionPerformed
     
     
@@ -226,6 +310,11 @@ public class NewJDialog extends javax.swing.JDialog {
             // TODO add your handling code here:
             if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
                 jButton1.doClick();
+                
+            }   
+                if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE){
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                
             }
     }//GEN-LAST:event_jTextField1KeyPressed
 
@@ -266,6 +355,7 @@ public class NewJDialog extends javax.swing.JDialog {
             public void run() {
                 try {
                     NewJDialog dialog = new NewJDialog(new javax.swing.JFrame(), true);
+                    
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent e) {
@@ -279,6 +369,7 @@ public class NewJDialog extends javax.swing.JDialog {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

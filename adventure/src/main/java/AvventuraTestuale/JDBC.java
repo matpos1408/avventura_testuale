@@ -5,7 +5,7 @@
 package AvventuraTestuale;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +21,9 @@ import java.util.Set;
  * @author Vito e Mattia
  */
 public class JDBC {
-        /**
+    static Object[] Indovinelli = new Object[4];    
+    static String Prova;
+    /**
      *
      */
     
@@ -29,7 +31,7 @@ public class JDBC {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static Object[] getIndovinelli() {
         try {
             //Connessione al DB
             Properties dbprops = new Properties();
@@ -40,7 +42,7 @@ public class JDBC {
             stm = conn.createStatement();
             //creazione statement
             // Dichiarazione e inializzazione dell'array di oggetti
-            Object[] domandeERisultati = new Object[4];
+            
             int index =0;
             // Generazione di 4 numeri casuali 
             Random rand = new Random();
@@ -61,24 +63,29 @@ public class JDBC {
                 System.out.println(rs.getInt(1) + ":     " + rs.getString(2) + " = " + rs.getString(3));
                 */
                 // inserimento dati nell'array
-                domandeERisultati[index] = new Domanda(rs.getString(2), rs.getString(3));
+                Indovinelli[index] = new Domanda(rs.getString(2), rs.getString(3));
                 index++;
+                
             }
+            
+           
             rs.close();
             stm.close();
             }
-            // stampa dell'array di oggetti
-               for (Object item : domandeERisultati) {
+            /* stampa dell'array di oggetti
+            
+                      for (Object item : Indovinelli) {
             if (item instanceof Domanda) {
                 Domanda domanda = (Domanda) item;
                 System.out.println("Domanda: " + domanda.getDomanda());
                 System.out.println("Risultato: " + domanda.getRisultato());
                 System.out.println();
             }
-        }
+        }*/
+            
             // -----------------------------------------------------------------------
             
-            /*
+            /* STAMPA DI TUTTI GLI INDOVINELLI
             stm = conn.createStatement();
             System.out.println("SQL Query");
             System.out.println("=======================");
@@ -88,17 +95,34 @@ public class JDBC {
             }
             rs.close();
             stm.close();*/
+            
+            
+            
+            Prova="capocchia";
             conn.close();
         } catch (SQLException ex) {
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
+    return Indovinelli;
     }
-}
+/*
+    public static Object[] getIndovinelli(){
+    return Indovinelli;
+    }
+    */
+    public static String getProva(){
+    Prova="capocchia";
+    return Prova;
+    }
+
+
+
+} // fine classe jdbc
 
 
    class Domanda {
-        private String domanda;
-        private String risultato;
+         private String domanda;
+         private String risultato;
     
         public Domanda(String domanda, String risultato) {
             this.domanda = domanda;

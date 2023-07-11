@@ -54,13 +54,16 @@ public class NewJDialog extends javax.swing.JDialog {
         ImageIcon studio4 = new ImageIcon("img/studio4.png");
        
         
-        //Thread per l'audio
+          //Thread per l'audio
         public class audioThread extends Thread{
+        boolean run = true;    
             public void run() {
+                while (run){
                 audio audio = new audio();
                 audio.playAudio("audio/music.wav"); 
+                }
             }
-        }    
+        }   
         
     
         

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AvventuraTestuale.Gioco;
+package AvventuraTestuale;
 
 import AvventuraTestuale.GameDescription;
 import AvventuraTestuale.Parser.ParserOutput;
@@ -12,6 +12,7 @@ import AvventuraTestuale.Tipo.ContenitoreOggetti;
 import AvventuraTestuale.Tipo.Comandi;
 import AvventuraTestuale.Tipo.TipoComandi;
 import AvventuraTestuale.Tipo.Stanze;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,7 +30,7 @@ import java.util.Iterator;
  * @author vito e mattia
  */
 public class TrovaIlTesoroGioco extends GameDescription {
-    
+    static String password;
     private final Socket socket;
 
     public TrovaIlTesoroGioco(Socket socket){
@@ -147,11 +148,35 @@ public class TrovaIlTesoroGioco extends GameDescription {
         getRooms().add(sgabuzzino);
         getRooms().add(bagno);
         setCurrentRoom(salotto);
-        //creazione fogliettini
-        Oggetti fogliettino2 = new Oggetti(2,"Fogliettino n.2","Il fogliettino n.2!! ,Sul fogliettino ci sono le lettere 4 e 7");
-        Oggetti fogliettino1 = new Oggetti(1,"Fogliettino n.1","Il fogliettino n.1!! ,Sul fogliettino ci sono le lettere 3 e 1");
-        Oggetti fogliettino3 = new Oggetti(3,"Fogliettino n.3","Il fogliettino n.3!! ,Sul fogliettino ci sono le lettere 9 e 5");
-        Oggetti fogliettino4 = new Oggetti(4,"Fogliettino n.4","Il fogliettino n.4!! ,Sul fogliettino ci sono le lettere 6 e 6");
+        
+        
+        //PROVE-----------------------------------
+        JDBC jdbc = new JDBC();
+        Object[] quesiti = new Object[4];
+        quesiti = jdbc.getIndovinelli();
+        String combinazione = "";
+        String[] Domande;
+        Domande = new String[4];
+        int counter=0;    
+            for (Object item : quesiti) {
+            if (item instanceof Domanda) {
+                Domanda domanda = (Domanda) item;
+                Domande[counter] = domanda.getDomanda();
+                String risultato =domanda.getRisultato();
+                combinazione= combinazione + risultato;
+                counter++;
+            }
+        }
+           password=combinazione;
+        
+ 
+        Oggetti fogliettino1 = new Oggetti(1,"Fogliettino n.1","Sopra c'è un indovinello: \n" + Domande[0]);
+        Oggetti fogliettino2 = new Oggetti(2,"Fogliettino n.2","Sopra c'è un indovinello: \n" + Domande[1]);
+        Oggetti fogliettino3 = new Oggetti(3,"Fogliettino n.3","Sopra c'è un indovinello: \n" + Domande[2]);
+        Oggetti fogliettino4 = new Oggetti(4,"Fogliettino n.4","Sopra c'è un indovinello: \n" + Domande[3]);
+
+    //creazione fogliettini
+       
         fogliettino1.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
         fogliettino2.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
         fogliettino3.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
@@ -323,7 +348,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                 else{
                                     getInventory().add(p.getObject());
                                     getCurrentRoom().getObjects().remove(p.getObject());
-                                    out1.println("Hai raccolto: " + p.getObject().getDescription());
+                                    out1.println("Hai raccolto: " + p.getObject().getName() +" "+ p.getObject().getDescription());
                                     
                                     if(getCurrentRoom()==getRooms().get(4)){
                                          String stanzetta  = "stanzetta  ";
@@ -388,7 +413,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
                                 if(getCurrentRoom()==getRooms().get(5) && !getCurrentRoom().getObjects().contains(quadro)){
                                     out1.println("Inserisci la combinazione ");
                                     String numero = in.readLine();
-                                    String combinazione="31479566";
+                                    String combinazione=password;
                                     if(numero.equals(combinazione)){
                                         String studio="studio  ";
                                         getCurrentRoom().setImages(studio);

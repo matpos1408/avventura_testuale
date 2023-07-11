@@ -4,8 +4,7 @@
  */
 package AvventuraTestuale;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,13 +18,20 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
 import java.awt.event.WindowEvent;
-import java.util.Random;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+
 /**
  *
  * @author Mattia e Vito
  */
 public class NewJDialog extends javax.swing.JDialog {
        
+        
+        
         ImageIcon bagno = new ImageIcon("img/bagno.png");
         ImageIcon salotto = new ImageIcon("img/salotto.png");
         ImageIcon cabinaArmadio1 = new ImageIcon("img/cabina_armadio1.png");
@@ -60,6 +66,8 @@ public class NewJDialog extends javax.swing.JDialog {
         
         
        private class ClientThread extends Thread{
+        
+        
        
         private  BufferedReader in = null;
         
@@ -75,6 +83,9 @@ public class NewJDialog extends javax.swing.JDialog {
        
         @Override
         public void run(){
+          
+          
+          
           audioThread.start();
           int random = (int) (Math.random() * 6) + 1;
           ImageIcon copertina = new ImageIcon("img/copertina/copertina" + random +".png");
@@ -82,8 +93,19 @@ public class NewJDialog extends javax.swing.JDialog {
          
         while(run){
                 try{
-                    
-                  String cmd=in.readLine();
+                // Carica il file del font TrueType
+                File fontFile = new File("font/pixelfont.ttf");
+                // Crea una nuova istanza di Font dal file
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+                // Registra il font nel GraphicsEnvironment
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(customFont);
+                // Utilizza il font personalizzato
+                Font font = new Font(customFont.getFontName(), Font.PLAIN, 8);  
+                jTextArea1.setFont(font);
+                jTextField1.setFont(font);
+                jButton1.setFont(font);
+            String cmd=in.readLine();
                        if(cmd.equals("salotto")){
                             jLabel1.setIcon(salotto);
                         }
@@ -155,7 +177,9 @@ public class NewJDialog extends javax.swing.JDialog {
                 }
                 catch(IOException ex){
                     System.err.println(ex);
-                }
+                } catch (FontFormatException ex) {
+                  Logger.getLogger(NewJDialog.class.getName()).log(Level.SEVERE, null, ex);
+              }
             }
            audioThread.interrupt();
            
@@ -233,7 +257,9 @@ public class NewJDialog extends javax.swing.JDialog {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
         jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -272,9 +298,9 @@ public class NewJDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

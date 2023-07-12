@@ -14,7 +14,7 @@ Per la creazione del software ci siamo appoggiati alla piattaforma di Hosting Gi
 Per la gestione delle dipendenze, dei framework e dell'automazione della build del codice ci siamo affidati ad Apache Maven, che ci ha consentito di specificare le librerie per il progetto in un file di configurazione chiamato "pom.xml".
 
 ## Diagramma Delle Classi
-
+adventure/img/Immagine 2023-07-12 210637.png
 
 
 ## Dettagli Tecnici 

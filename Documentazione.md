@@ -15,6 +15,7 @@ Per la gestione delle dipendenze, dei framework e dell'automazione della build d
 
 ## Diagramma Delle Classi
 adventure/img/Immagine 2023-07-12 210637.png
+![DiagrammaDelleClassi](adventure/img/Immagine 2023-07-12 210637.png)
 
 
 ## Dettagli Tecnici 

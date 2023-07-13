@@ -1,5 +1,7 @@
 ## Descrizione Caso di Studio
 
+## Autori : Picci Vito & Poso Mattia
+
 ### Obiettivi
 Il progetto dell'avventura testuale nasce con lo scopo di andare a potenziare le capacità di sviluppo del codice del singolo programmatore e di creare intesa nello sviluppo del software lavorando in team, al fine di massimizzare l’efficienza del lavoro.
 

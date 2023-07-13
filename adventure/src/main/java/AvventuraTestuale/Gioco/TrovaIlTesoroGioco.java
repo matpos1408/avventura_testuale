@@ -196,7 +196,7 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
         ContenitoreOggetti armadio = new ContenitoreOggetti(9, "armadio", "Un armadio ");
         Oggetti chiave = new Oggetti(7, "chiave", "Questa chiave probabilmente serve ad aprire una porta della casa.");
-        armadio.setAlias(new String[]{"key"});
+        armadio.setAlias(new String[]{"mobile"});
         armadio.setOpenable(true);
         armadio.setPickupable(false);
         armadio.setOpen(false);

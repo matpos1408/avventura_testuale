@@ -166,10 +166,10 @@ public class TrovaIlTesoroGioco extends GameDescription {
 
     //creazione fogliettini
        
-        fogliettino1.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
-        fogliettino2.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
-        fogliettino3.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
-        fogliettino4.setAlias(new String[]{"foglio", "foglietto", "fogliettino"});
+        fogliettino1.setAlias(new String[]{"foglio", "foglietto", "fogliettino", "biglietto", "bigliettino"});
+        fogliettino2.setAlias(new String[]{"foglio", "foglietto", "fogliettino", "biglietto", "bigliettino"});
+        fogliettino3.setAlias(new String[]{"foglio", "foglietto", "fogliettino", "biglietto", "bigliettino"});
+        fogliettino4.setAlias(new String[]{"foglio", "foglietto", "fogliettino", "biglietto", "bigliettino"});
         cameraDaLetto.getObjects().add(fogliettino2);
         cucina.getObjects().add(fogliettino4);
         cabinaArmadio.getObjects().add(fogliettino1);

@@ -28,7 +28,7 @@ operations:
     isNew() -> boolean
 
 ### Specifica Semantica
-Declare list: List, o: Oggetti
+Declare List: List, o: Oggetti
 
 ![SpecificaSemantica](Specifica_Semantica.png)
 

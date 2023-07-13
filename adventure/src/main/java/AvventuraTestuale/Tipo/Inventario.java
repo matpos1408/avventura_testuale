@@ -23,8 +23,4 @@ public class Inventario {
     public void add(Oggetti o) {
         list.add(o);
     }
-
-    public void remove(Oggetti o) {
-        list.remove(o);
-    }
 }

@@ -16,7 +16,7 @@ Per la gestione delle dipendenze, dei framework e dell'automazione della build d
 ## Diagramma Delle Classi
 
 Il seguente diagramma delle classi rappresenta la relazione che c'è tra le classi nel momento in cui il gioco si è avvitato e il client ha effettuato un comando nella partita
-![DiagrammaDelleClassi](DiagrammaDelleClassi.png)
+
 
 ## Definizione Struttura algebrica
 La struttura algebrica descritta corrisponde alla List contenuta nella classe Inventario.java

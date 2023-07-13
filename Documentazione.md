@@ -29,6 +29,8 @@ operations:
 ### Specifica Semantica
 Declare list: List, o: Oggetti
 
+![SpecificaSemantica](Specifica_Semantica.png)
+
 
 ### Specifica di Restrizione
  remove(newInventario) -> error

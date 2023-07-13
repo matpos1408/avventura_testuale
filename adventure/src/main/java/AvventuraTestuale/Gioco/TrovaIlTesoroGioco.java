@@ -179,7 +179,6 @@ public class TrovaIlTesoroGioco extends GameDescription {
         ContenitoreOggetti comodino = new ContenitoreOggetti(5, "comodino", "Un comodino con il cassetto semi aperto.");
         comodino.setOpenable(true);
         comodino.setAlias(new String[]{"comò", "cassettiera","credenza","cassetto"});
-        comodino.setOpenable(true);
         comodino.setPickupable(false);
         comodino.setOpen(false);
         cameraDaLetto.getObjects().add(comodino);

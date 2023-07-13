@@ -29,7 +29,8 @@ operations:
 ### Specifica Semantica
 Declare list: List, o: Oggetti
 
-![SpecificaSemantica](Specifica_Semantica.png)
+![SpecificaSemantica](Specifica _Semantica.png)
+
 
 
 ### Specifica di Restrizione

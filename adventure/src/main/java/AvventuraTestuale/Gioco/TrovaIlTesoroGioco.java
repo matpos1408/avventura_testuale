@@ -86,11 +86,11 @@ public class TrovaIlTesoroGioco extends GameDescription {
         Stanze cameraDaLetto = new Stanze(3, "Camera Da letto", "Sei nella camera da letto.\nChissà perché una persona così sola aveva un letto così grande...");
         cameraDaLetto.setLook("Il comodino ha il cassetto leggermente aperto.");
         Stanze corridoio = new Stanze(4, "Corridoio", "Sei nel corridoio, quanta luce entra dalle finestre!");
-        corridoio.setLook("Il corridoio così vuoto da capire subito che non c'è nulla di interessante");
+        corridoio.setLook("Il corridoio è così vuoto da capire subito che non c'è nulla di interessante");
         Stanze stanzetta = new Stanze(5, "Stanzetta", "Questa è la stanza per gli ospiti\nTuo zio non aveva molti amici.. infatti la stanza è come nuova.");
         stanzetta.setLook("C'è un armadio molto grande, sarebbe opportuno dargli un occhiata.");
         Stanze studio = new Stanze(6, "studio", "Lo studio dello zio \nIn questo studio lo zio ha scritto alcuni dei suoi più grandi articoli.");
-        studio.setLook("C'è una scrivania con un computer ma noti anche un quadro di un ritrazzo di tuo zio, non te lo ricordavi così egocentrico.");
+        studio.setLook("C'è una scrivania con un computer ma noti anche un quadro di un ritratto di tuo zio, non te lo ricordavi così egocentrico.");
         Stanze cabinaArmadio = new Stanze(7, "Cabina Armadio", "Una comunissima cabina armadio.... piena di vestiti tutti dello stesso colore.");
         cabinaArmadio.setLook("Tra tutti i vestiti vedi la famosa giacca che metteva spesso tuo zio, dalla tasca spunta un fogliettino.");
         Stanze sgabuzzino = new Stanze(8, "sgabuzzino", "\nQuesta stanza non te la ricordi... probabilmente non ci sei mai entrato."+"\nLa stanza è poco illuminata e piena di polvere");

@@ -297,8 +297,8 @@ public class TrovaIlTesoroGioco extends GameDescription {
                 }
             } 
             //COMANDO SPOSTA
-            else if (p.getCommand().getType() == TipoComandi.MOVE) {
-                    if (p.getObject() != null) {
+           else if (p.getCommand().getType() == TipoComandi.MOVE) {
+                    if (p.getObject() != null && getCurrentRoom()==getRooms().get(5)) {
                         if (p.getObject().isPickupable()) {
                             String studio="studio ";
                             getCurrentRoom().setImages(studio);
@@ -308,6 +308,8 @@ public class TrovaIlTesoroGioco extends GameDescription {
                             
                             
                         }
+                    }else{
+                        out1.println("Non c'è niente da spostare qui");
                     }    
                 }else if (p.getCommand().getType() == TipoComandi.LOOK_AT) {
                     //sei nello studio e hai spostato il quadro

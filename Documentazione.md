@@ -29,7 +29,7 @@ operations:
 ### Specifica Semantica
 Declare list: List, o: Oggetti
 
-![SpecificaSemantica](Specifica _Semantica.png)
+![SpecificaSemantica](Specifica_Semantica.png)
 
 
 

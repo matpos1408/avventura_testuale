@@ -19,6 +19,7 @@ La struttura algebrica descritta corrisponde alla List contenuta nella classe In
 
 ### Specifica Sintattica
 Sorts: List , Oggetti , Boolean
+
 operations:
     newInventario() -> List;
     getList() -> List

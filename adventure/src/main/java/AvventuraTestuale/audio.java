@@ -23,13 +23,14 @@ public class audio {
 
     public static void playAudio(String audioFilePath) {
         try {
+            // Caricamento file audio in formato wav
             File audioFile = new File(audioFilePath);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-
+            
             // Attendi la fine della riproduzione
             Thread.sleep(clip.getMicrosecondLength() / 1000);
 

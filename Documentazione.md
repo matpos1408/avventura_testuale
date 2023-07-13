@@ -12,7 +12,7 @@ Per la creazione del software ci siamo appoggiati alla piattaforma di Hosting Gi
 Per la gestione delle dipendenze, dei framework e dell'automazione della build del codice ci siamo affidati ad Apache Maven, che ci ha consentito di specificare le librerie per il progetto in un file di configurazione chiamato "pom.xml".
 
 ## Diagramma Delle Classi
-
+![DiagrammaDelleClassi](DiagrammaDelleClassi.png)
 
 ## Definizione Struttura algebrica
 La struttura algebrica descritta corrisponde alla List contenuta nella classe Inventario.java
@@ -29,8 +29,10 @@ operations:
 ### Specifica Semantica
 Declare list: List, o: Oggetti
 
+
 ### Specifica di Restrizione
  remove(newInventario) -> error
+ 
  getList(newInventario) -> error
 
 ## Dettagli Tecnici 

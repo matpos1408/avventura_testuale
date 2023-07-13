@@ -16,6 +16,23 @@ Per la gestione delle dipendenze, dei framework e dell'automazione della build d
 ## Diagramma Delle Classi
 ![DiagrammaDelleClassi](DiagrammaDelleClassi.png)
 
+## Definizione Struttura algebrica
+La struttura algebrica descritta corrisponde alla List contenuta nella classe Inventario.java
+
+###Specifica Sintattica
+Sorts: List , Oggetti , Boolean
+operations:
+    newInventario() -> List;
+    getList() -> List
+    add(o) -> List
+    remove(o) -> List
+    isNew() -> boolean
+###Specifica Semantica
+Declare list: List, o: Oggetti
+
+###Specifica di Restrizione
+ remove(newInventario) -> error
+ getList(newInventario) -> error
 
 ## Dettagli Tecnici 
 

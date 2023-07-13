@@ -31,7 +31,7 @@ import java.io.IOException;
 public class NewJDialog extends javax.swing.JDialog {
        
         
-        
+        // Caricamento immagini
         ImageIcon bagno = new ImageIcon("img/bagno.png");
         ImageIcon salotto = new ImageIcon("img/salotto.png");
         ImageIcon cabinaArmadio1 = new ImageIcon("img/cabina_armadio1.png");
@@ -52,46 +52,36 @@ public class NewJDialog extends javax.swing.JDialog {
         ImageIcon studio2 = new ImageIcon("img/studio2.png");
         ImageIcon studio3 = new ImageIcon("img/studio3.png");
         ImageIcon studio4 = new ImageIcon("img/studio4.png");
-       
-        
-        //Thread per l'audio
-        public class audioThread extends Thread{
-            public void run() {
-                audio audio = new audio();
-                audio.playAudio("audio/music.wav"); 
-            }
-        }    
+        ImageIcon cella = new ImageIcon("img/inventario/cella.png");
+        ImageIcon foglio = new ImageIcon("img/inventario/foglietto.png");
+        ImageIcon chiave = new ImageIcon("img/inventario/chiave.png");
+        ImageIcon pergamena = new ImageIcon("img/inventario/pergamena.png");
+
         
     
         
         
        private class ClientThread extends Thread{
-        
-        
-       
         private  BufferedReader in = null;
-        
         private JTextArea textArea;
-        
         private boolean run = true;
-        
         public ClientThread(BufferedReader in,JTextArea textArea){
             this.in =in;
             this.textArea = textArea;
         }
-        audioThread audioThread = new audioThread();
+        
        
         @Override
         public void run(){
-          
-          
-          
-          audioThread.start();
+          //Settaggio di una copertina casuale
           int random = (int) (Math.random() * 6) + 1;
           ImageIcon copertina = new ImageIcon("img/copertina/copertina" + random +".png");
           jLabel1.setIcon(copertina);  
-         
-        while(run){
+          // Appena il gioco si apre richiede il nome utente 
+          jTextArea1.setText("\n Inserire username con il comando: #name 'username' ");
+          int indexCella=0;
+          String items ="";
+          while(run){
                 try{
                 // Carica il file del font TrueType
                 File fontFile = new File("font/pixelfont.ttf");
@@ -101,11 +91,14 @@ public class NewJDialog extends javax.swing.JDialog {
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(customFont);
                 // Utilizza il font personalizzato
-                Font font = new Font(customFont.getFontName(), Font.PLAIN, 8);  
+                Font font = new Font(customFont.getFontName(), Font.PLAIN, 10);  
                 jTextArea1.setFont(font);
                 jTextField1.setFont(font);
                 jButton1.setFont(font);
-            String cmd=in.readLine();
+                String cmd=in.readLine();
+           
+         
+                        // Visualizzazione immagine a seconda della stanza 
                        if(cmd.equals("salotto")){
                             jLabel1.setIcon(salotto);
                         }
@@ -123,6 +116,7 @@ public class NewJDialog extends javax.swing.JDialog {
                        }
                        if(cmd.equals("studio   ")){
                            jLabel1.setIcon(studio4);
+                        
                        }
                        if(cmd.equals("stanzetta")){
                            jLabel1.setIcon(stanzetta1);
@@ -132,12 +126,14 @@ public class NewJDialog extends javax.swing.JDialog {
                        }
                        if(cmd.equals("stanzetta  ")){
                            jLabel1.setIcon(stanzetta3);
+                        
                        }
                         if(cmd.equals("cabinaArmadio")){
                            jLabel1.setIcon(cabinaArmadio1);
                        }
                          if(cmd.equals("cabinaArmadio ")){
                            jLabel1.setIcon(cabinaArmadio2);
+                         
                        }
                          if(cmd.equals("bagno")){
                            jLabel1.setIcon(bagno);
@@ -147,15 +143,18 @@ public class NewJDialog extends javax.swing.JDialog {
                        }
                           if(cmd.equals("cameraDaLetto ")){
                            jLabel1.setIcon(cameraDaLetto3);
+                            
                        }
                            if(cmd.equals("cameraDaLetto  ")){
                            jLabel1.setIcon(cameraDaLetto2);
+                       
                        }
                            if(cmd.equals("cucina")){
                            jLabel1.setIcon(cucina1);
                        }
                            if(cmd.equals("cucina ")){
                            jLabel1.setIcon(cucina2);
+                      
                        }
                             if(cmd.equals("sgabuzzino")){
                            jLabel1.setIcon(sgabuzzino1);
@@ -165,10 +164,11 @@ public class NewJDialog extends javax.swing.JDialog {
                        }
                             if(cmd.equals("sgabuzzino  ")){
                            jLabel1.setIcon(sgabuzzino3);
+                      
                        }
-                       
-                           
                             
+                        
+                 
                        else{
                            textArea.setText(textArea.getText() + cmd + "\n");
                            textArea.setCaretPosition(textArea.getDocument().getLength());
@@ -181,7 +181,7 @@ public class NewJDialog extends javax.swing.JDialog {
                   Logger.getLogger(NewJDialog.class.getName()).log(Level.SEVERE, null, ex);
               }
             }
-           audioThread.interrupt();
+          
            
         }
         
@@ -215,6 +215,7 @@ public class NewJDialog extends javax.swing.JDialog {
                
                 ct.start();
                 
+                
                
             }catch(IOException ex){
                 
@@ -242,7 +243,10 @@ public class NewJDialog extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(39, 27, 32));
         jPanel1.setForeground(new java.awt.Color(39, 27, 32));
 
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(39, 2, 32)));
+        jTextField1.setCaretColor(new java.awt.Color(226, 209, 192));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 none(evt);
@@ -255,18 +259,23 @@ public class NewJDialog extends javax.swing.JDialog {
         });
 
         jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(39, 2, 32)));
+        jTextArea1.setCaretColor(new java.awt.Color(226, 209, 192));
         jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(jTextArea1);
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(39, 2, 32));
         jButton1.setText("Invia");
         jButton1.setToolTipText("Clicca per inviare");
+        jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(39, 2, 32)));
         jButton1.setName(""); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,21 +295,21 @@ public class NewJDialog extends javax.swing.JDialog {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(jTextField1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(12, 12, 12)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -321,37 +330,34 @@ public class NewJDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-      
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         String message = jTextField1.getText();
-         
-            if( message != null && message.length()>0){
-                out.println(message);
-                jTextField1.setText("");
-            } 
-            
-            
+        String message = jTextField1.getText();
+
+        if( message != null && message.length()>0){
+            out.println(message);
+            jTextField1.setText("");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    
+
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-            // TODO add your handling code here:
-            if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
-                jButton1.doClick();
-                
-            }   
-                if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE){
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-                
-            }
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            jButton1.doClick();
+
+        }
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE){
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void none(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_none
         // TODO add your handling code here:
-          
     }//GEN-LAST:event_none
-
+          
+    
     /**
      * @param args the command line arguments
      */

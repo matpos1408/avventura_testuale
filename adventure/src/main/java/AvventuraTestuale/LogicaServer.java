@@ -6,25 +6,11 @@ package AvventuraTestuale;
 
 /**
  *
- * @author UTENTE
- */
-/*
- * Copyright (C) 2020 pierpaolo
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * @author Vito e Mattia
  */
 
+
+import AvventuraTestuale.Gioco.TrovaIlTesoroGioco;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -93,8 +79,7 @@ public class LogicaServer extends Thread {
             System.out.println("Connessione accettata: " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            Boolean flag=false;
-            do{
+            while(run){
                 String str = in.readLine();
                 if (str != null) {
                     str = str.trim();
@@ -106,19 +91,18 @@ public class LogicaServer extends Thread {
                             String name = matcher.group();
                             try {
                                 md.addUser(name, this);
-                                out.println("#ok");
-                                flag=true;
+                                out.println("\n#username valido");
                                 Engine engine = new Engine(new TrovaIlTesoroGioco(socket),socket);
                                 engine.execute();
                             } catch (Exception ex) {
                                 out.println("#error " + ex.getMessage());
                             }
                         }
-                    } /*else if (findcmd && !matcher.group().equalsIgnoreCase("#name")) {
+                    } else if (findcmd && !matcher.group().equalsIgnoreCase("#name")) {
                         out.println("inserisci il comando corretto");
-                    } */
+                    } 
                 }
-            }while(flag==false);
+            }
         } catch (IOException ex) {
             System.err.println(ex);
         } finally {

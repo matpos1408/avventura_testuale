@@ -52,10 +52,6 @@ public class NewJDialog extends javax.swing.JDialog {
         ImageIcon studio2 = new ImageIcon("img/studio2.png");
         ImageIcon studio3 = new ImageIcon("img/studio3.png");
         ImageIcon studio4 = new ImageIcon("img/studio4.png");
-        ImageIcon cella = new ImageIcon("img/inventario/cella.png");
-        ImageIcon foglio = new ImageIcon("img/inventario/foglietto.png");
-        ImageIcon chiave = new ImageIcon("img/inventario/chiave.png");
-        ImageIcon pergamena = new ImageIcon("img/inventario/pergamena.png");
 
         
     
